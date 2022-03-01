@@ -1,24 +1,19 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Product = db.define("product", {
-  garmentType: {
-    type: Sequelize.STRING,
-    defaulValue: T - Shirt,
-    allowNull: false,
-  },
-  designName: {
+const OrderEntry = db.define("orderEntry", {
+  Size: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  designName: {
+  Color: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  QTY: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  imgPath: {
-    type: Sequelize.STRING,
     allowNull: false,
   },
 });
 
-module.exports = Product;
+module.exports = OrderEntry;
