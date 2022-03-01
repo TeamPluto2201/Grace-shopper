@@ -21,4 +21,6 @@ const Product = db.define("user", {
   },
 });
 
+//git troubleshooting
+
 module.exports = Product;
