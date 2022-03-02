@@ -29,6 +29,7 @@ async function seed() {
   // Creating Orders
   const orders = await Promise.all([
     Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
   ])
 
    // Creating Order Entries
@@ -36,16 +37,20 @@ async function seed() {
     OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
     OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
     OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
+    OrderEntry.create({ size: 'M', color: 'white', QTY: 10 }),
   ])
 
   // Setting up associations
   await users[0].addOrder(orders[0]);
+  await users[0].addOrder(orders[1]);
   await orderEntries[0].setProduct(products[0]);
   await orderEntries[0].setOrder(orders[0]);
   await orderEntries[1].setProduct(products[1]);
   await orderEntries[1].setOrder(orders[0]);
   await orderEntries[2].setProduct(products[2]);
   await orderEntries[2].setOrder(orders[0]);
+  await orderEntries[3].setProduct(products[2]);
+  await orderEntries[3].setOrder(orders[1]);
 
 
   console.log(`seeded ${users.length} users`)
