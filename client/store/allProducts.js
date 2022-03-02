@@ -15,10 +15,12 @@ function _getProducts(products) {
 };
 
 // Thunk creators
-async function getProductsThunkCreator() { 
+export function getProductsThunkCreator() { 
   try {
+    return async (dispatch) => {
       const { data } = await axios.get('api/products');
-      return dispatch(_getProducts(data));
+      dispatch(_getProducts(data));
+    }
   } catch(err) {
       console.log('Error inside getProductsThunkCreator: ', err)
   }

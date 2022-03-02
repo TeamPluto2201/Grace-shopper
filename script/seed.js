@@ -18,12 +18,12 @@ async function seed() {
 
   // Creating Products
   const products = await Promise.all([
-    Product.create({ designName: 'DIVA', price: 10, imgPath: "../public/Shirt-1.png " }),
-    Product.create({ designName: 'BLANCHEDALMOND', price: 11, imgPath: "../public/Shirt-2.png " }),
-    Product.create({ designName: 'MOTH', price: 12, imgPath: "../public/Shirt-3.png " }),
-    Product.create({ designName: 'GRACEHOPPER', price: 13, imgPath: "../public/Shirt-4.png " }),
-    Product.create({ designName: 'BROGLE', price: 14, imgPath: "../public/Shirt-5.png " }),
-    Product.create({ designName: 'HACK', price: 15, imgPath: "../public/Shirt-6.png " }),
+    Product.create({ designName: 'DIVA', price: 10, imgPath: "/Shirt-1.png " }),
+    Product.create({ designName: 'BLANCHEDALMOND', price: 11, imgPath: "/Shirt-2.png " }),
+    Product.create({ designName: 'MOTH', price: 12, imgPath: "/Shirt-3.png " }),
+    Product.create({ designName: 'GRACEHOPPER', price: 13, imgPath: "/Shirt-4.png " }),
+    Product.create({ designName: 'BROGLE', price: 14, imgPath: "/Shirt-5.png " }),
+    Product.create({ designName: 'HACK', price: 15, imgPath: "/Shirt-6.png " }),
   ])
 
 
