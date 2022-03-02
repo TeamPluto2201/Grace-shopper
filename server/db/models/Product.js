@@ -4,14 +4,14 @@ const db = require("../db");
 const Product = db.define("product", {
   garmentType: {
     type: Sequelize.STRING,
-    defaulValue: T - Shirt,
-    allowNull: false,
+    defaultValue: "T - Shirt"
+
   },
   designName: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  designName: {
+  price: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
