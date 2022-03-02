@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { models: { User }} = require('../db');
+const { models: { OrderEntry, Order }} = require('../db');
 const Product = 'INSERT PRODUCT MODEL';
 
 
@@ -10,15 +10,15 @@ router.get('/:orderId', async(req, res, next) => {
     // one user associated with a given order, we'll pick up the order items from the 
     // Order-entry model (hence line 18).
     try {
-        // const cart = await Order.findAll({
-        //     include: {
-        //         model: Order-entry,
-        //     },
-        //     where: {
-        //         [Order-entryId]: orderId
-        //     }
-        // })
-        res.send(`Whoop de doo, here is our orderId route for ${req.params.orderId}`)
+        const cart = await OrderEntry.findAll({
+            include: {
+                model: Order,
+            },
+            where: {
+                orderId: req.params.orderId,
+            }
+        })
+        res.send(cart)
     } catch(err) {
         next(err)
     }
