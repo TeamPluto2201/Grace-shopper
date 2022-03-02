@@ -16,6 +16,7 @@ const setAuth = auth => ({type: SET_AUTH, auth})
 /**
  * THUNK CREATORS
  */
+// running whenever you are logged in, persists the token
 export const me = () => async dispatch => {
   const token = window.localStorage.getItem(TOKEN)
   if (token) {
@@ -27,7 +28,7 @@ export const me = () => async dispatch => {
     return dispatch(setAuth(res.data))
   }
 }
-
+// allows you to log in
 export const authenticate = (username, password, method) => async dispatch => {
   try {
     console.log('what do we get in our thunk? -->',username, password)
