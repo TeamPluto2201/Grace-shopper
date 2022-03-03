@@ -1,10 +1,11 @@
-import React, {Component, Fragment} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Welcome from './components/Welcome';
-import {me} from './store'
+import { me } from './store'
 import AllProducts from './components/AllProducts';
+import OrderEntryForm from './components/OrderEntryForm';
 
 /**
  * COMPONENT
@@ -15,7 +16,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const { isLoggedIn } = this.props
 
     return (
       <div>
@@ -36,7 +37,10 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
           </Switch>
         )}
-        <AllProducts />
+        <OrderEntryForm />
+        {/* <AllProducts /> */}
+
+
       </div>
     )
   }
