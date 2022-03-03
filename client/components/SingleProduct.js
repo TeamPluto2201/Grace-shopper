@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProductThunkCreator } from "../store/SingleProduct";
+import OrderEntryForm from "./OrderEntryForm.js";
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -15,6 +16,7 @@ class SingleProduct extends React.Component {
 
   render() {
     console.log("props--->", this.props);
+    console.log("This.props.id************************************", this.props.id)
     // if (this.)
 
     return (
@@ -22,11 +24,12 @@ class SingleProduct extends React.Component {
         <div>
           <h1>Welcome to The One Product Page</h1>
           <div>
-            <div key={this.props.id}>
+            <div key={this.props.match.params.id}>
               <img src={this.props.product.imgPath} />
               <div>{this.props.product.designName}</div>
               <div>${this.props.product.price}</div>
             </div>
+            <div><OrderEntryForm productId={this.props.match.params.id} /></div>
           </div>
         </div>
       </div>
