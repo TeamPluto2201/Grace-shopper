@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getOrderEntriesThunkCreator } from "../store/cart";
+import { getOrderEntriesThunkCreator, addOrderEntryThunkCreator } from "../store/cart";
+
 
 
 class OrderEntryForm extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            size: "",
-            color: "",
-            QTY: ""
+            size: "S",
+            color: "white",
+            QTY: "1"
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,28 +25,36 @@ class OrderEntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const entryObject = { ...this.state, userId: this.props.auth.id, productId: this.props.productId }
+        console.log("ENTRYOBJECT********************", entryObject)
+        this.props.addToCart(entryObject)
+
+        //needs to call thunk that creates orderEntry 
         //take our local state add the product id that gets passed in to props. 
         //needs to be able to add to a cart regardless of whether someone is logged in or not. 
         //call a thunk that creates a new orderEntry item
     }
 
     render() {
+        console.log("THIS.PROPS.AUTH....................", this.props.auth);
         return (
             <>
                 <h3>Order Entry Form</h3>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>Size</label>
                         <select name='size' onChange={this.handleChange}>
-                            <option value={"L"}>L</option>
-                            <option value={"M"}>M</option>
+
                             <option value={"S"}>S</option>
+                            <option value={"M"}>M</option>
+                            <option value={"L"}>L</option>
+
                         </select>
                     </div>
 
                     <div>
                         <label>Color</label>
-                        <select name='completed' onChange={this.handleChange}>
+                        <select name='color' onChange={this.handleChange}>
                             <option value={"white"}>white</option>
                             <option value={"black"}>black</option>
                         </select>
@@ -54,7 +63,7 @@ class OrderEntryForm extends React.Component {
                     <div>
                         <label>Qty</label>
 
-                        <input type='number' name='QTY' value={this.state.name} onChange={this.handleChange} />
+                        <input type='number' min='1' name='QTY' value={this.state.name} onChange={this.handleChange} />
 
                     </div>
                     <div>
@@ -67,17 +76,24 @@ class OrderEntryForm extends React.Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     return {
-//       products: state.products,
-//     };
-//   }
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+
+    };
+}
 function mapDispatchToProps(dispatch) {
     return {
         getAllProducts: () => {
             dispatch(getOrderEntriesThunkCreator());
         },
+
+        addToCart: (entryToCreate) => {
+            dispatch(addOrderEntryThunkCreator(entryToCreate));
+        },
+
+
     };
 }
 
-export default connect(null, mapDispatchToProps)(OrderEntryForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderEntryForm);
