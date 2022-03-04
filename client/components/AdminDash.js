@@ -10,8 +10,6 @@ class AdminDash extends React.Component {
   };
 
   componentDidMount() {
-      console.log('Component mounted!!');
-      console.log(this.props);
       this.props.loadAllProducts();
       this.props.loadAllUsers();
   };
@@ -19,7 +17,6 @@ class AdminDash extends React.Component {
   render() {
     const productsToRender = this.props.products || [];
     const usersToRender = this.props.users || [];
-    console.log('USERS TO RENDER >>>>>>>>', usersToRender)
 
     return (
         <div>
