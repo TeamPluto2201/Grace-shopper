@@ -59,6 +59,7 @@ class AdminDash extends React.Component {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Admin</th>
                   <th>Update User</th>
                 </tr>
               </thead>
@@ -67,6 +68,7 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
+                      <td>{element.isAdmin}</td>
                       <td>
                         <button>Edit</button>
                         <button>Delete</button>
@@ -79,8 +81,8 @@ class AdminDash extends React.Component {
           </div>
         ) : (
           <div>
-            <div>You're not allowed here, son.</div>
-            <Link to={"/products"}>Go home.</Link>
+            <div>Oops! You don't have access to this page.</div>
+            <Link to={"/products"}>Back to home page</Link>
           </div>
         )}
       </div>
