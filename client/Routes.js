@@ -7,6 +7,7 @@ import { me } from "./store";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import AdminDash from "./components/AdminDash";
+import Cart from "./components/Cart";
 
 /**
  * COMPONENT
@@ -25,7 +26,9 @@ class Routes extends Component {
         {isAdmin && isLoggedIn ? (
           <div>
             {/* <AdminDash /> */}
-            <Link to={"/admin"}>View Dashboard</Link>
+            <Link id='viewDash' className='navLinks' to={"/admin"}>
+              View Dashboard
+            </Link>
           </div>
         ) : (
           <div>
@@ -41,17 +44,18 @@ class Routes extends Component {
                 {/* <Route path='/' exact component={ Login } /> */}
                 {/* <Login />
               <Signup /> */}
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={Signup} />
+                <Route path='/login' component={Login} />
+                <Route path='/signup' component={Signup} />
               </div>
             )}
           </div>
         )}
 
-        <Route exact path="/" component={AllProducts} />
-        <Route exact path="/products" component={AllProducts} />
-        <Route exact path="/products/:id" component={SingleProduct} />
-        <Route exact path="/admin" component={AdminDash} />
+        <Route exact path='/' component={AllProducts} />
+        <Route exact path='/products' component={AllProducts} />
+        <Route exact path='/products/:id' component={SingleProduct} />
+        <Route exact path='/admin' component={AdminDash} />
+        <Route exact path='/cart' component={Cart} />
       </div>
     );
   }
