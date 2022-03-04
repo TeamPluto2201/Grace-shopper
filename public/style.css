@@ -37,6 +37,7 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
 #shirtImgAll {
   width: 300px;
 }
@@ -117,4 +118,31 @@ form div {
 #designNameAll {
   font-size: 25pt;
   font-style: bold;
+
+
+table {
+  table-layout: fixed;
+  text-align: left;
+  width: 900px;
+  border-collapse: collapse;
 }
+
+thead {
+  background-color: #adb5bd;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #e9ecef;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #ced4da;
+}
+
+td {
+  padding: 10px;
+}
+
+.td-img {
+  width: 100px;
+

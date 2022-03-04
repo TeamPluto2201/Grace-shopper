@@ -12,7 +12,7 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
+    User.create({ username: 'cody', password: '123', isAdmin: true }),
     User.create({ username: 'murphy', password: '123' }),
     User.create({ username: 'kendra', password: '123' }),
     User.create({ username: 'alexandra', password: '123' }),
@@ -65,25 +65,14 @@ async function seed() {
 
   // Creating Orders
   const orders = await Promise.all([
-    Order.create({ purchased: false }),
-    Order.create({ purchased: true }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: true }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
+    Order.create({ purchased: false }), 
     Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: true }),
     Order.create({ purchased: true }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
     Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
@@ -92,12 +81,23 @@ async function seed() {
     Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
     Order.create({ purchased: false }),
-    Order.create({ purchased: false }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
+    Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: false }),
   ])
@@ -429,7 +429,6 @@ async function seed() {
   await users[14].addOrder(orders[29]);
   await users[14].addOrder(orders[30]);
   await users[14].addOrder(orders[31]);
-  await users[14].addOrder(orders[31]);
   await users[14].addOrder(orders[32]);
   await orderEntries[71].setOrder(orders[29]);
   await orderEntries[71].setProduct(products[2]);
@@ -466,9 +465,6 @@ async function seed() {
   await orderEntries[83].setProduct(products[4]);
   await orderEntries[84].setOrder(orders[34]);
   await orderEntries[84].setProduct(products[0]);
-
-  //User 17 orders
- await users[16].addOrder(orders[35]);
 
 
 
