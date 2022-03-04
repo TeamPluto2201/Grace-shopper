@@ -6,6 +6,7 @@ import Welcome from "./components/Welcome";
 import { me } from "./store";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
+import AdminDash from "./components/AdminDash";
 
 /**
  * COMPONENT
@@ -41,6 +42,7 @@ class Routes extends Component {
         <Route exact path='/' component={AllProducts} />
         <Route exact path='/products' component={AllProducts} />
         <Route exact path='/products/:id' component={SingleProduct} />
+        <Route exact path='/admin' component={AdminDash} />
       </div>
     );
   }
