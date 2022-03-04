@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrderEntriesThunkCreator } from "../store/cart";
+import CartItems from "./CartOrderEntryCards";
 
 class AllOrderEntries extends React.Component {
   constructor() {
@@ -21,19 +22,9 @@ class AllOrderEntries extends React.Component {
       <div id='allContainer'>
         <h1 id='pageHeader'>MY CART</h1>
         <div id='wrapContainer'>
-          {entryArray.map((entry) => {
-            return (
-              <div id='productCardAllView' key={entry.id}>
-                <img id='shirtImgAll' src={entry.productId.imgPath} />
-                <div id='designNameAll'>{entry.productId.designName}</div>
-                <div>${entry.productId.price}</div>
-                <div>{entry.QTY}</div>
-                <div>{entry.size}</div>
-                <div>{entry.color}</div>
-              </div>
-            );
-          })}
+          <CartItems entryArray={entryArray} />
         </div>
+        <button type='button'>CHECKOUT</button>
       </div>
     );
   }
