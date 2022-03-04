@@ -8,6 +8,7 @@ const initialState = [];
 // Action types
 const GET_ORDER_ENTRIES = "GET_ORDER_ENTRIES";
 const ADD_ORDER_ENTRY = "ADD_ORDER_ENTRY";
+const UPDATE_ORDER_ENTRY = "UPDATE_ORDER_ENTRY";
 
 // Action creators
 function _getOrderEntries(orderEntries) {
@@ -20,6 +21,13 @@ function _getOrderEntries(orderEntries) {
 function _addOrderEntry(orderEntry) {
     return ({
         type: ADD_ORDER_ENTRY,
+        orderEntry
+    })
+};
+
+function _updateOrderEntry(orderEntry) {
+    return ({
+        type: UPDATE_ORDER_ENTRY,
         orderEntry
     })
 };
@@ -48,12 +56,26 @@ export function addOrderEntryThunkCreator(entryToCreate) {
     }
 };
 
+export function updateOrderEntryThunkCreator(entryToUpdate) {
+    try {
+      return async (dispatch) => {
+          const { data } = await axios.put('/api/orderEntries', entryToUpdate);
+          dispatch(_updateOrderEntry(data));
+      }
+    } catch(err) {
+        console.log('Error inside updateOrderEntryThunkCreator', err)
+    }
+};
+
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_ORDER_ENTRIES:
             return action.orderEntries;
 
         case ADD_ORDER_ENTRY:
+            return [...state, action.orderEntry]
+        
+        case UPDATE_ORDER_ENTRY:
             return [...state, action.orderEntry]
 
         default:
