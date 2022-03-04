@@ -1,5 +1,12 @@
 body {
   font-family: sans-serif;
+  background: rgb(200, 200, 200);
+  background: linear-gradient(
+    180deg,
+    rgb(228, 228, 228) 0%,
+    rgba(161, 161, 161, 1) 91%,
+    rgba(87, 87, 87, 1) 100%
+  );
 }
 
 a {
@@ -10,9 +17,20 @@ label {
   display: block;
 }
 
-nav a {
+.navLinks {
   display: inline-block;
   margin: 1em;
+  font-size: 20px;
+  transition: all 1s ease;
+}
+.navLinks:link {
+  color: rgb(255, 255, 255);
+}
+.navLinks:visited {
+  color: gray;
+}
+.navLinks:hover {
+  color: cyan;
 }
 
 form div {
@@ -22,6 +40,23 @@ form div {
 #shirtImgAll {
   width: 300px;
 }
+
+#navBar {
+  display: flex;
+  flex-direction: row;
+  background: rgb(48, 48, 48);
+  height: 400px;
+  align-items: flex-end;
+}
+
+.navLinks {
+  display: flex;
+  width: 150px;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+}
+
 #allContainer {
   display: flex;
   align-items: center;
@@ -40,7 +75,7 @@ form div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: rgb(177, 179, 178);
+  color: rgb(255, 255, 255);
   font-size: 50px;
   padding: 30px;
   margin: 30px;
@@ -54,16 +89,32 @@ form div {
   top: 0;
   margin: 50px; */
 }
+#logo {
+  width: 1000px;
+  position: left;
+  margin-right: 500px;
+}
 
+#cartIcon {
+  width: 100px;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
 #productCardAllView {
   display: flex;
   justify-content: center;
   align-items: center;
   height: auto;
-  width: 480px;
-  font-size: 30pt;
-  margin: 10px;
+  width: 350px;
+  font-size: 20pt;
+  margin: 30px;
   padding: 10px;
-  border-style: solid;
+  background: white;
+  border-style: none;
   flex-direction: column;
+}
+
+#designNameAll {
+  font-size: 25pt;
+  font-style: bold;
 }

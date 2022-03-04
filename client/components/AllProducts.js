@@ -26,7 +26,7 @@ class AllProducts extends React.Component {
             return (
               <div id='productCardAllView' key={tShirt.id}>
                 <img id='shirtImgAll' src={tShirt.imgPath} />
-                <div>{tShirt.designName}</div>
+                <div id='designNameAll'>{tShirt.designName}</div>
                 <div>${tShirt.price}</div>
               </div>
             );
