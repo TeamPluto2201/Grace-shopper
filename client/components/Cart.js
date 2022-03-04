@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrderEntriesThunkCreator } from "../store/cart";
 import CartItems from "./CartOrderEntryCards";
+import CartCheckoutPrompt from "./CartCheckoutPropmt";
 
 class AllOrderEntries extends React.Component {
   constructor() {
@@ -23,8 +24,8 @@ class AllOrderEntries extends React.Component {
         <h1 id='pageHeader'>MY CART</h1>
         <div id='wrapContainer'>
           <CartItems entryArray={entryArray} />
+          <CartCheckoutPrompt />
         </div>
-        <button type='button'>CHECKOUT</button>
       </div>
     );
   }
