@@ -1,5 +1,12 @@
 body {
   font-family: sans-serif;
+  background: rgb(200, 200, 200);
+  background: linear-gradient(
+    180deg,
+    rgb(228, 228, 228) 0%,
+    rgba(161, 161, 161, 1) 91%,
+    rgba(87, 87, 87, 1) 100%
+  );
 }
 
 a {
@@ -10,15 +17,108 @@ label {
   display: block;
 }
 
-nav a {
+.navLinks {
   display: inline-block;
   margin: 1em;
+  font-size: 20px;
+  transition: all 1s ease;
+}
+.navLinks:link {
+  color: rgb(255, 255, 255);
+}
+.navLinks:visited {
+  color: gray;
+}
+.navLinks:hover {
+  color: cyan;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
 }
+
+#shirtImgAll {
+  width: 300px;
+}
+
+#navBar {
+  display: flex;
+  flex-direction: row;
+  background: rgb(48, 48, 48);
+  height: 400px;
+  align-items: flex-end;
+}
+
+.navLinks {
+  display: flex;
+  width: 150px;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+}
+
+#allContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#wrapContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 1700px;
+}
+#pageHeader {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+  padding: 30px;
+  margin: 30px;
+  background-color: rgb(66, 66, 66);
+  border-radius: 50px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(110, 110, 110);
+  width: 600px;
+  text-decoration: none;
+  /* position: fixed;
+  top: 0;
+  margin: 50px; */
+}
+#logo {
+  width: 1000px;
+  position: left;
+  margin-right: 500px;
+}
+
+#cartIcon {
+  width: 100px;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
+#productCardAllView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 350px;
+  font-size: 20pt;
+  margin: 30px;
+  padding: 10px;
+  background: white;
+  border-style: none;
+  flex-direction: column;
+}
+
+#designNameAll {
+  font-size: 25pt;
+  font-style: bold;
+
 
 table {
   table-layout: fixed;
@@ -45,4 +145,4 @@ td {
 
 .td-img {
   width: 100px;
-}
+
