@@ -22,35 +22,66 @@ class AdminDash extends React.Component {
     return (
       <div>
         {isAdmin ? (
-            <div>
-              <h1>Admin Dashboard</h1>
-              <h3>Products</h3>
-              <div>
+          <div>
+            <h1>Admin Dashboard</h1>
+            <h3>Products</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Design Name</th>
+                  <th>ID</th>
+                  <th>Price</th>
+                  <th>Update Product</th>
+                </tr>
+              </thead>
+              <tbody>
                 {productsToRender.map((element) => {
                   return (
-                    <div key={element.id}>
-                      <div>{element.designName}</div>
-                      <img src={element.imgPath} style={{ width: "100px" }} />
-                      <ul>
-                        <li>ID: {element.id}</li>
-                        <li>Price: {element.price}</li>
-                      </ul>
-                    </div>
+                    <tr key={element.id}>
+                      <td className="td-img">
+                        <img src={element.imgPath} style={{ width: "100px" }} />
+                      </td>
+                      <td>{element.designName}</td>
+                      <td>{element.id}</td>
+                      <td>${element.price}</td>
+                      <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                      </td>
+                    </tr>
                   );
                 })}
-              </div>
-              <h3>Users</h3>
-              <ul>
+              </tbody>
+            </table>
+            <h3>Users</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Update User</th>
+                </tr>
+              </thead>
+              <tbody>
                 {usersToRender.map((element) => {
-                  return <li key={element.id}>{element.username}</li>;
+                  return (
+                    <tr key={element.id}>
+                      <td>{element.username}</td>
+                      <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                      </td>
+                    </tr>
+                  );
                 })}
-              </ul>
-            </div>
+              </tbody>
+            </table>
+          </div>
         ) : (
-            <div>
-                <div>You're not allowed here, son.</div>
-                <Link to={"/products"}>Go home.</Link>
-            </div>
+          <div>
+            <div>You're not allowed here, son.</div>
+            <Link to={"/products"}>Go home.</Link>
+          </div>
         )}
       </div>
     );
