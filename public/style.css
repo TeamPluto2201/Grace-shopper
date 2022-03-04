@@ -19,3 +19,51 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+#shirtImgAll {
+  width: 300px;
+}
+#allContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#wrapContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 1700px;
+}
+#pageHeader {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgb(177, 179, 178);
+  font-size: 50px;
+  padding: 30px;
+  margin: 30px;
+  background-color: rgb(66, 66, 66);
+  border-radius: 50px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(110, 110, 110);
+  width: 600px;
+  text-decoration: none;
+  /* position: fixed;
+  top: 0;
+  margin: 50px; */
+}
+
+#productCardAllView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 480px;
+  font-size: 30pt;
+  margin: 10px;
+  padding: 10px;
+  border-style: solid;
+  flex-direction: column;
+}
