@@ -15,7 +15,6 @@ class AdminDash extends React.Component {
   }
 
   render() {
-    console.log('PROPS in admin dashboard--->', this.props)
     const productsToRender = this.props.products || [];
     const usersToRender = this.props.users || [];
     const isAdmin = this.props.isAdmin;

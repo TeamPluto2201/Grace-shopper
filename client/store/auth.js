@@ -25,14 +25,12 @@ export const me = () => async dispatch => {
         authorization: token
       }
     })
-    console.log('RES.DATA-->',res.data)
     return dispatch(setAuth(res.data))
   }
 }
 // allows you to log in
 export const authenticate = (username, password, method) => async dispatch => {
   try {
-    console.log('what do we get in our thunk? -->',username, password)
     const res = await axios.post(`/auth/${method}`, {username, password})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
