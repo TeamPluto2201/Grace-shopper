@@ -49,12 +49,9 @@ async function seed() {
     User.create({ username: 'valerie', password: '123' }),
     User.create({ username: 'jevan', password: '123' }),
     User.create({ username: 'eadie', password: '123' }),
-
-
   ])
 
-  //color
-
+  //Color
   const colors = await Promise.all([
     Color.create({name: 'white'}),
     Color.create({name: 'black'})
@@ -217,7 +214,6 @@ async function seed() {
     - an order that has been purchased
     - an order than has not been purchased
   */
-
 
   //User 0 orders
   await users[0].addOrder(orders[0]);
@@ -388,7 +384,6 @@ async function seed() {
   await orderEntries[43].setProduct(products[4]);
   await orderEntries[43].setColor(colors[0])
 
-
   //User 8 orders
   await users[8].addOrder(orders[21]);
   await orderEntries[44].setOrder(orders[21]);
@@ -409,7 +404,6 @@ async function seed() {
   await orderEntries[49].setOrder(orders[21]);
   await orderEntries[49].setProduct(products[5]);
   await orderEntries[49].setColor(colors[0])
-
 
   //User 9 orders
   await users[9].addOrder(orders[22]);
@@ -432,7 +426,6 @@ async function seed() {
   await orderEntries[55].setProduct(products[5]);
   await orderEntries[55].setColor(colors[1])
 
-
   //User 10 orders
   await users[10].addOrder(orders[23]);
   await orderEntries[56].setOrder(orders[23]);
@@ -451,7 +444,6 @@ async function seed() {
   //User 11 orders
   await users[11].addOrder(orders[24]);
  
-
   //User 12 orders
   await users[12].addOrder(orders[25]);
   await orderEntries[60].setOrder(orders[25]);
@@ -524,7 +516,6 @@ async function seed() {
   await orderEntries[78].setProduct(products[0]);
   await orderEntries[78].setColor(colors[0])
 
-
   //User 15 orders
   await users[15].addOrder(orders[33]);
   await orderEntries[79].setOrder(orders[33]);
@@ -548,8 +539,6 @@ async function seed() {
   await orderEntries[84].setOrder(orders[34]);
   await orderEntries[84].setProduct(products[0]);
   await orderEntries[84].setColor(colors[1])
-
-
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
