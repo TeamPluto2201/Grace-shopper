@@ -1,27 +1,55 @@
 const router = require('express').Router();
-const { models: { OrderEntry, Order }} = require('../db');
-const Product = 'INSERT PRODUCT MODEL';
+const { models: { OrderEntry, Order, Product } } = require('../db');
 
+//all routes start at /api/cart
 
-// Assume for now we have an Order-entry model
-
-router.get('/:orderId', async(req, res, next) => {
-    // Our thinking is that the orderId will be in the route path and since there is only
-    // one user associated with a given order, we'll pick up the order items from the 
-    // Order-entry model (hence line 18).
+//route for getting all the outstanding orderentries to render in a cart for a user. 
+router.get('/:userId', async (req, res, next) => {
     try {
+        const order = await Order.findAll({
+            where: {
+                userId: req.params.userId,
+                purchased: false,
+            },
+        });
         const cart = await OrderEntry.findAll({
             include: {
-                model: Order,
+                model: Product
             },
             where: {
-                orderId: req.params.orderId,
+                orderId: order[0].id
             }
         })
         res.send(cart)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 });
+
+//try a different approach 
+
+router.get('/:userId', async (req, res, next) => {
+    try {
+        const order = await Order.findAll({
+            where: {
+                userId: req.params.userId,
+                purchased: false,
+            },
+        });
+        const cart = await OrderEntry.findAll({
+            include: {
+                model: Order,
+                model: Product
+            },
+            where: {
+                orderId: order[0].id
+            }
+        })
+        res.send(cart)
+    } catch (err) {
+        next(err)
+    }
+});
+
 
 module.exports = router;
