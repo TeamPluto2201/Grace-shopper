@@ -27,7 +27,7 @@ class AllProducts extends React.Component {
               <div id='productCardAllView' key={tShirt.id}>
                 <img id='shirtImgAll' src={tShirt.imgPath} />
                 <div id='designNameAll'>{tShirt.designName}</div>
-                <div>${tShirt.price}</div>
+                <div>${(tShirt.price / 100).toFixed(2)}</div>
               </div>
             );
           })}

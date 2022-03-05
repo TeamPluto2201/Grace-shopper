@@ -3,22 +3,8 @@ const db = require("../db");
 
 const OrderEntry = db.define("orderEntry", {
   size: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM('S', 'M', 'L'),
     allowNull: false,
-    validate: {
-      isIn: [
-        ['S', 'M', 'L'],
-      ]
-    }
-  },
-  color: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isIn: [
-        ['white', 'black'],
-      ]
-    }
   },
   QTY: {
     type: Sequelize.INTEGER,

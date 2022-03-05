@@ -25,6 +25,7 @@ export const me = () => async dispatch => {
         authorization: token
       }
     })
+    console.log('RES.DATA-->',res.data)
     return dispatch(setAuth(res.data))
   }
 }

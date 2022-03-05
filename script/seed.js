@@ -1,6 +1,6 @@
 'use strict'
 
-const { db, models: { User, Product, Order, OrderEntry } } = require('../server/db')
+const { db, models: { User, Product, Order, OrderEntry, Color } } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -53,15 +53,23 @@ async function seed() {
 
   ])
 
+  //color
+
+  const colors = await Promise.all([
+    Color.create({name: 'white'}),
+    Color.create({name: 'black'})
+  ])
+
   // Creating Products
   const products = await Promise.all([
-    Product.create({ designName: 'DIVA', price: 10, imgPath: "/Shirt-1.png " }),
-    Product.create({ designName: 'BLANCHEDALMOND', price: 11, imgPath: "/Shirt-2.png " }),
-    Product.create({ designName: 'MOTH', price: 12, imgPath: "/Shirt-3.png " }),
-    Product.create({ designName: 'GRACEHOPPER', price: 13, imgPath: "/Shirt-4.png " }),
-    Product.create({ designName: 'BROGLE', price: 14, imgPath: "/Shirt-5.png " }),
-    Product.create({ designName: 'HACK', price: 15, imgPath: "/Shirt-6.png " }),
+    Product.create({ designName: 'DIVA', price: 1000, imgPath: "/Shirt-1.png " }),
+    Product.create({ designName: 'BLANCHE D\'ALMOND', price: 1100, imgPath: "/Shirt-2.png " }),
+    Product.create({ designName: 'BROGLE', price: 1200, imgPath: "/Shirt-3.png " }),
+    Product.create({ designName: 'GRACE HOPPER', price: 1300, imgPath: "/Shirt-4.png " }),
+    Product.create({ designName: 'MOTH', price: 1400, imgPath: "/Shirt-5.png " }),
+    Product.create({ designName: 'HACK', price: 1500, imgPath: "/Shirt-6.png " }),
   ])
+
 
   // Creating Orders
   const orders = await Promise.all([
@@ -104,102 +112,91 @@ async function seed() {
 
    // Creating Order Entries
    const orderEntries = await Promise.all([
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 10 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 5 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 7000 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 10 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 5 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 7000 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 10 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 3 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 5 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 7000 }),
-    OrderEntry.create({ size: 'M', color: 'black', QTY: 2 }),
-    OrderEntry.create({ size: 'S', color: 'white', QTY: 1 }),
-    OrderEntry.create({ size: 'L', color: 'black', QTY: 4 }),
-    OrderEntry.create({ size: 'M', color: 'white', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 10 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 3 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 5 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 7000 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 10 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 3 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 5 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 7000 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 10 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 3 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 1 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
+    OrderEntry.create({ size: 'S', QTY: 1 }),
+    OrderEntry.create({ size: 'L', QTY: 4 }),
+    OrderEntry.create({ size: 'M', QTY: 3 }),
+    OrderEntry.create({ size: 'M', QTY: 2 }),
   ])
 
   // Setting up associations
@@ -227,24 +224,32 @@ async function seed() {
   await users[0].addOrder(orders[1]);
   await orderEntries[0].setOrder(orders[0]);
   await orderEntries[0].setProduct(products[0]);
+  await orderEntries[0].setColor(colors[0])
   await orderEntries[1].setOrder(orders[0]);
   await orderEntries[1].setProduct(products[1]);
+  await orderEntries[1].setColor(colors[0])
   await orderEntries[2].setOrder(orders[0]);
   await orderEntries[2].setProduct(products[2]);
+  await orderEntries[2].setColor(colors[1])
   await orderEntries[3].setOrder(orders[1]);
   await orderEntries[3].setProduct(products[2]);
+  await orderEntries[3].setColor(colors[1])
 
   //User 1 orders
   await users[1].addOrder(orders[2]);
   await users[1].addOrder(orders[3]);
   await orderEntries[4].setOrder(orders[2]);
   await orderEntries[4].setProduct(products[0]);
+  await orderEntries[4].setColor(colors[1])
   await orderEntries[5].setOrder(orders[3]);
   await orderEntries[5].setProduct(products[5]);
+  await orderEntries[5].setColor(colors[0])
   await orderEntries[6].setOrder(orders[3]);
   await orderEntries[6].setProduct(products[4]);
+  await orderEntries[6].setColor(colors[1])
   await orderEntries[7].setOrder(orders[3]);
   await orderEntries[7].setProduct(products[2]);
+  await orderEntries[7].setColor(colors[0])
 
   //User 2 orders
   await users[2].addOrder(orders[4]);
@@ -254,69 +259,96 @@ async function seed() {
   await users[2].addOrder(orders[8]);
   await orderEntries[8].setOrder(orders[4]);
   await orderEntries[8].setProduct(products[0]);
+  await orderEntries[8].setColor(colors[1])
   await orderEntries[9].setOrder(orders[4]);
   await orderEntries[9].setProduct(products[1]);
+  await orderEntries[9].setColor(colors[0])
   await orderEntries[10].setOrder(orders[5]);
   await orderEntries[10].setProduct(products[2]);
+  await orderEntries[10].setColor(colors[0])
   await orderEntries[11].setOrder(orders[5]);
   await orderEntries[11].setProduct(products[3]);
+  await orderEntries[11].setColor(colors[0])
   await orderEntries[12].setOrder(orders[6]);
   await orderEntries[12].setProduct(products[3]);
+  await orderEntries[12].setColor(colors[0])
   await orderEntries[13].setOrder(orders[6]);
   await orderEntries[13].setProduct(products[2]);
+  await orderEntries[13].setColor(colors[0])
   await orderEntries[14].setOrder(orders[7]);
   await orderEntries[14].setProduct(products[4]);
+  await orderEntries[14].setColor(colors[0])
   await orderEntries[15].setProduct(products[5]);
   await orderEntries[15].setOrder(orders[7]);
+  await orderEntries[15].setColor(colors[0])
   await orderEntries[16].setProduct(products[0]);
+  await orderEntries[16].setOrder(orders[8]);
+  await orderEntries[16].setColor(colors[0])
   await orderEntries[17].setOrder(orders[8]);
   await orderEntries[17].setProduct(products[0]);
+  await orderEntries[17].setColor(colors[0])
 
   //User 3 orders
   await users[3].addOrder(orders[9]);
   await orderEntries[18].setOrder(orders[9]);
   await orderEntries[18].setProduct(products[0]);
+  await orderEntries[18].setColor(colors[1])
   await orderEntries[19].setOrder(orders[9]);
   await orderEntries[19].setProduct(products[1]);
+  await orderEntries[19].setColor(colors[1])
   await orderEntries[20].setOrder(orders[9]);
   await orderEntries[20].setProduct(products[1]);
+  await orderEntries[20].setColor(colors[0])
   await orderEntries[21].setOrder(orders[9]);
   await orderEntries[21].setProduct(products[2]);
+  await orderEntries[21].setColor(colors[1])
 
   //User 4 orders
   await users[4].addOrder(orders[10]);
   await users[4].addOrder(orders[11]);
   await orderEntries[22].setOrder(orders[10]);
   await orderEntries[22].setProduct(products[1]);
+  await orderEntries[22].setColor(colors[1])
   await orderEntries[23].setOrder(orders[10]);
   await orderEntries[23].setProduct(products[3]);
+  await orderEntries[23].setColor(colors[0])
   await orderEntries[24].setOrder(orders[10]);
   await orderEntries[24].setProduct(products[2]);
+  await orderEntries[24].setColor(colors[1])
   await orderEntries[25].setOrder(orders[11]);
   await orderEntries[25].setProduct(products[3]);
+  await orderEntries[25].setColor(colors[0])
   await orderEntries[26].setOrder(orders[11]);
   await orderEntries[26].setProduct(products[4]);
+  await orderEntries[26].setColor(colors[1])
   await orderEntries[27].setOrder(orders[11]);
   await orderEntries[27].setProduct(products[5]);
+  await orderEntries[27].setColor(colors[1])
 
   //User 5 orders
   await users[5].addOrder(orders[12]);
   await users[5].addOrder(orders[13]);
   await orderEntries[28].setOrder(orders[12]);
   await orderEntries[28].setProduct(products[5]);
+  await orderEntries[28].setColor(colors[0])
   await orderEntries[29].setOrder(orders[12]);
   await orderEntries[29].setProduct(products[0]);
+  await orderEntries[29].setColor(colors[1])
   await orderEntries[30].setOrder(orders[12]);
   await orderEntries[30].setProduct(products[3]);
+  await orderEntries[30].setColor(colors[0])
   await orderEntries[31].setOrder(orders[12]);
   await orderEntries[31].setProduct(products[1]);
+  await orderEntries[31].setColor(colors[1])
   await orderEntries[32].setOrder(orders[13]);
   await orderEntries[32].setProduct(products[0]);
+  await orderEntries[32].setColor(colors[0])
 
   //User 6 orders
   await users[6].addOrder(orders[14]);
   await orderEntries[33].setOrder(orders[14]);
   await orderEntries[33].setProduct(products[2]);
+  await orderEntries[33].setColor(colors[0])
 
   //User 7 orders
   await users[7].addOrder(orders[15]);
@@ -327,68 +359,94 @@ async function seed() {
   await users[7].addOrder(orders[20]);
   await orderEntries[34].setOrder(orders[15]);
   await orderEntries[34].setProduct(products[1]);
+  await orderEntries[34].setColor(colors[1])
   await orderEntries[35].setOrder(orders[16]);
   await orderEntries[35].setProduct(products[2]);
+  await orderEntries[35].setColor(colors[1])
   await orderEntries[36].setOrder(orders[17]);
   await orderEntries[36].setProduct(products[0]);
+  await orderEntries[36].setColor(colors[1])
   await orderEntries[37].setOrder(orders[18]);
   await orderEntries[37].setProduct(products[3]);
+  await orderEntries[37].setColor(colors[0])
   await orderEntries[38].setOrder(orders[19]);
   await orderEntries[38].setProduct(products[4]);
+  await orderEntries[38].setColor(colors[0])
   await orderEntries[39].setOrder(orders[20]);
   await orderEntries[39].setProduct(products[5]);
+  await orderEntries[39].setColor(colors[0])
   await orderEntries[40].setOrder(orders[20]);
   await orderEntries[40].setProduct(products[0]);
+  await orderEntries[40].setColor(colors[0])
   await orderEntries[41].setOrder(orders[20]);
   await orderEntries[41].setProduct(products[1]);
+  await orderEntries[41].setColor(colors[0])
   await orderEntries[42].setOrder(orders[20]);
   await orderEntries[42].setProduct(products[2]);
+  await orderEntries[42].setColor(colors[1])
   await orderEntries[43].setOrder(orders[20]);
   await orderEntries[43].setProduct(products[4]);
+  await orderEntries[43].setColor(colors[0])
 
 
   //User 8 orders
   await users[8].addOrder(orders[21]);
   await orderEntries[44].setOrder(orders[21]);
   await orderEntries[44].setProduct(products[0]);
+  await orderEntries[44].setColor(colors[1])
   await orderEntries[45].setOrder(orders[21]);
   await orderEntries[45].setProduct(products[1]);
+  await orderEntries[45].setColor(colors[0])
   await orderEntries[46].setOrder(orders[21]);
   await orderEntries[46].setProduct(products[2]);
+  await orderEntries[46].setColor(colors[1])
   await orderEntries[47].setOrder(orders[21]);
   await orderEntries[47].setProduct(products[3]);
+  await orderEntries[47].setColor(colors[0])
   await orderEntries[48].setOrder(orders[21]);
   await orderEntries[48].setProduct(products[4]);
+  await orderEntries[48].setColor(colors[1])
   await orderEntries[49].setOrder(orders[21]);
   await orderEntries[49].setProduct(products[5]);
+  await orderEntries[49].setColor(colors[0])
 
 
   //User 9 orders
   await users[9].addOrder(orders[22]);
   await orderEntries[50].setOrder(orders[22]);
   await orderEntries[50].setProduct(products[0]);
+  await orderEntries[50].setColor(colors[1])
   await orderEntries[51].setOrder(orders[22]);
   await orderEntries[51].setProduct(products[1]);
+  await orderEntries[51].setColor(colors[0])
   await orderEntries[52].setOrder(orders[22]);
   await orderEntries[52].setProduct(products[1]);
+  await orderEntries[52].setColor(colors[1])
   await orderEntries[53].setOrder(orders[22]);
   await orderEntries[53].setProduct(products[3]);
+  await orderEntries[53].setColor(colors[0])
   await orderEntries[54].setOrder(orders[22]);
   await orderEntries[54].setProduct(products[4]);
+  await orderEntries[54].setColor(colors[1])
   await orderEntries[55].setOrder(orders[22]);
   await orderEntries[55].setProduct(products[5]);
+  await orderEntries[55].setColor(colors[1])
 
 
   //User 10 orders
   await users[10].addOrder(orders[23]);
   await orderEntries[56].setOrder(orders[23]);
   await orderEntries[56].setProduct(products[0]);
+  await orderEntries[56].setColor(colors[1])
   await orderEntries[57].setOrder(orders[23]);
   await orderEntries[57].setProduct(products[1]);
+  await orderEntries[57].setColor(colors[0])
   await orderEntries[58].setOrder(orders[23]);
   await orderEntries[58].setProduct(products[2]);
+  await orderEntries[58].setColor(colors[0])
   await orderEntries[59].setOrder(orders[23]);
   await orderEntries[59].setProduct(products[3]);
+  await orderEntries[59].setColor(colors[1])
 
   //User 11 orders
   await users[11].addOrder(orders[24]);
@@ -398,14 +456,19 @@ async function seed() {
   await users[12].addOrder(orders[25]);
   await orderEntries[60].setOrder(orders[25]);
   await orderEntries[60].setProduct(products[0]);
+  await orderEntries[60].setColor(colors[0])
   await orderEntries[61].setOrder(orders[25]);
   await orderEntries[61].setProduct(products[1]);
+  await orderEntries[61].setColor(colors[1])
   await orderEntries[62].setOrder(orders[25]);
   await orderEntries[62].setProduct(products[2]);
+  await orderEntries[62].setColor(colors[0])
   await orderEntries[63].setOrder(orders[25]);
   await orderEntries[63].setProduct(products[3]);
+  await orderEntries[63].setColor(colors[0])
   await orderEntries[64].setOrder(orders[25]);
   await orderEntries[64].setProduct(products[4]);
+  await orderEntries[64].setColor(colors[1])
 
 
   //User 13 orders
@@ -414,16 +477,22 @@ async function seed() {
   await users[13].addOrder(orders[28]);
   await orderEntries[65].setOrder(orders[26]);
   await orderEntries[65].setProduct(products[0]);
+  await orderEntries[65].setColor(colors[1])
   await orderEntries[66].setOrder(orders[26]);
   await orderEntries[66].setProduct(products[1]);
+  await orderEntries[66].setColor(colors[0])
   await orderEntries[67].setOrder(orders[27]);
   await orderEntries[67].setProduct(products[0]);
+  await orderEntries[67].setColor(colors[1])
   await orderEntries[68].setOrder(orders[27]);
   await orderEntries[68].setProduct(products[2]);
+  await orderEntries[68].setColor(colors[1])
   await orderEntries[69].setOrder(orders[28]);
   await orderEntries[69].setProduct(products[0]);
+  await orderEntries[69].setColor(colors[1])
   await orderEntries[70].setOrder(orders[28]);
   await orderEntries[70].setProduct(products[4]);
+  await orderEntries[70].setColor(colors[1])
 
   //User 14 orders
   await users[14].addOrder(orders[29]);
@@ -432,39 +501,53 @@ async function seed() {
   await users[14].addOrder(orders[32]);
   await orderEntries[71].setOrder(orders[29]);
   await orderEntries[71].setProduct(products[2]);
+  await orderEntries[71].setColor(colors[1])
   await orderEntries[72].setOrder(orders[29]);
   await orderEntries[72].setProduct(products[0]);
+  await orderEntries[72].setColor(colors[1])
   await orderEntries[73].setOrder(orders[29]);
   await orderEntries[73].setProduct(products[1]);
+  await orderEntries[73].setColor(colors[1])
   await orderEntries[74].setOrder(orders[30]);
   await orderEntries[74].setProduct(products[4]);
+  await orderEntries[74].setColor(colors[1])
   await orderEntries[75].setOrder(orders[31]);
   await orderEntries[75].setProduct(products[0]);
+  await orderEntries[75].setColor(colors[1])
   await orderEntries[76].setOrder(orders[32]);
   await orderEntries[76].setProduct(products[5]);
+  await orderEntries[76].setColor(colors[1])
   await orderEntries[77].setOrder(orders[32]);
   await orderEntries[77].setProduct(products[2]);
+  await orderEntries[77].setColor(colors[1])
   await orderEntries[78].setOrder(orders[32]);
   await orderEntries[78].setProduct(products[0]);
+  await orderEntries[78].setColor(colors[0])
 
 
   //User 15 orders
   await users[15].addOrder(orders[33]);
   await orderEntries[79].setOrder(orders[33]);
   await orderEntries[79].setProduct(products[0]);
+  await orderEntries[79].setColor(colors[1])
   await orderEntries[80].setOrder(orders[33]);
   await orderEntries[80].setProduct(products[0]);
+  await orderEntries[80].setColor(colors[0])
   await orderEntries[81].setOrder(orders[33]);
   await orderEntries[81].setProduct(products[0]);
+  await orderEntries[81].setColor(colors[1])
 
   //User 16 orders
   await users[16].addOrder(orders[34]);
   await orderEntries[82].setOrder(orders[34]);
   await orderEntries[82].setProduct(products[1]);
+  await orderEntries[82].setColor(colors[1])
   await orderEntries[83].setOrder(orders[34]);
   await orderEntries[83].setProduct(products[4]);
+  await orderEntries[83].setColor(colors[0])
   await orderEntries[84].setOrder(orders[34]);
   await orderEntries[84].setProduct(products[0]);
+  await orderEntries[84].setColor(colors[1])
 
 
 

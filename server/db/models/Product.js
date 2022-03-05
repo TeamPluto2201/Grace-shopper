@@ -3,9 +3,8 @@ const db = require("../db");
 
 const Product = db.define("product", {
   garmentType: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM('T - Shirt'),
     defaultValue: "T - Shirt"
-
   },
   designName: {
     type: Sequelize.STRING,
