@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Switch, Link } from "react-router-dom";
 import { getProductsThunkCreator } from "../store/allProducts";
 import { getUsersThunkCreator } from "../store/adminDash";
+import { deleteProductThunkCreator } from "../store/SingleProduct";
 
 class AdminDash extends React.Component {
   constructor() {
@@ -13,6 +14,25 @@ class AdminDash extends React.Component {
     this.props.loadAllProducts();
     this.props.loadAllUsers();
   }
+
+  // handleClickProduct(event) {
+  //   event.preventDefault();
+  //   console.log('submit was clicked!!!')
+  //   const type = event.target
+  //   console.log(event)
+  //   // if (type === 'Delete') {
+  //   //   this.props.deleteProduct();
+  //   // }
+
+  // }
+
+  // handleClickUser(event) {
+  //   event.preventDefault();
+  //   console.log('submit was clicked!!!')
+  //   const type = event.target.innerText
+
+    
+  // }
 
   render() {
     const productsToRender = this.props.products || [];
@@ -46,8 +66,13 @@ class AdminDash extends React.Component {
                       <td>{element.id}</td>
                       <td>${element.price}</td>
                       <td>
+                        {/* <button onClick={() => {
+                          this.editProduct(element.id)
+                        }}>Edit</button> */}
                         <button>Edit</button>
-                        <button>Delete</button>
+                        <button onClick={() => {
+                          this.props.deleteProduct(element.id)
+                        }}>Delete</button>
                       </td>
                     </tr>
                   );
@@ -106,6 +131,9 @@ function mapDispatchToProps(dispatch) {
     loadAllUsers: () => {
       dispatch(getUsersThunkCreator());
     },
+    deleteProduct: (id) => {
+      dispatch(deleteProductThunkCreator(id));
+    }
   };
 }
 

@@ -22,4 +22,14 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const productToDelete = await Product.findByPk(req.params.id);
+    await productToDelete.destroy();
+    res.send(productToDelete);
+  } catch(err) {
+    next(err);
+  };
+});
+
 module.exports = router;
