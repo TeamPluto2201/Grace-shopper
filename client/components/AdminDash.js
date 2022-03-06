@@ -4,10 +4,18 @@ import { Switch, Link } from "react-router-dom";
 import { getProductsThunkCreator } from "../store/allProducts";
 import { getUsersThunkCreator } from "../store/adminDash";
 import { deleteProductThunkCreator } from "../store/SingleProduct";
+import EditProductForm from "./EditProductForm";
 
 class AdminDash extends React.Component {
   constructor() {
     super();
+    this.state = {
+      displayEditForm: 0,
+      // displayEditForm will be set to the id of the product that the
+      // admin wants to edit so that the edit form will render
+    };
+
+    this.editProduct = this.editProduct.bind(this);
   }
 
   componentDidMount() {
@@ -15,24 +23,14 @@ class AdminDash extends React.Component {
     this.props.loadAllUsers();
   }
 
-  // handleClickProduct(event) {
-  //   event.preventDefault();
-  //   console.log('submit was clicked!!!')
-  //   const type = event.target
-  //   console.log(event)
-  //   // if (type === 'Delete') {
-  //   //   this.props.deleteProduct();
-  //   // }
-
-  // }
-
-  // handleClickUser(event) {
-  //   event.preventDefault();
-  //   console.log('submit was clicked!!!')
-  //   const type = event.target.innerText
-
-    
-  // }
+  editProduct(event) {
+    //event.preventDefault();
+    const productId = event.target.value;
+    this.setState({
+      displayEditForm: productId,
+    });
+    console.log("state was set...", this.state);
+  }
 
   render() {
     const productsToRender = this.props.products || [];
@@ -66,13 +64,23 @@ class AdminDash extends React.Component {
                       <td>{element.id}</td>
                       <td>${element.price}</td>
                       <td>
-                        {/* <button onClick={() => {
-                          this.editProduct(element.id)
-                        }}>Edit</button> */}
-                        <button>Edit</button>
-                        <button onClick={() => {
-                          this.props.deleteProduct(element.id)
-                        }}>Delete</button>
+                        <button value={element.id} onClick={this.editProduct}>
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => {
+                            this.props.deleteProduct(element.id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                      <td>
+                        {this.state.displayEditForm === element.id ? (
+                          <div>
+                            <EditProductForm />
+                          </div>
+                        ) : null}
                       </td>
                     </tr>
                   );
@@ -95,8 +103,7 @@ class AdminDash extends React.Component {
                       <td>{element.username}</td>
                       <td>{element.isAdmin}</td>
                       <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button>Make admin</button>
                       </td>
                     </tr>
                   );
@@ -131,9 +138,12 @@ function mapDispatchToProps(dispatch) {
     loadAllUsers: () => {
       dispatch(getUsersThunkCreator());
     },
+    // editProduct: () => {
+    //   <EditProductForm />
+    // },
     deleteProduct: (id) => {
       dispatch(deleteProductThunkCreator(id));
-    }
+    },
   };
 }
 
