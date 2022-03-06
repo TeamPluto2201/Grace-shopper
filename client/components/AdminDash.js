@@ -5,6 +5,7 @@ import { getProductsThunkCreator } from "../store/allProducts";
 import { getUsersThunkCreator } from "../store/adminDash";
 import { deleteProductThunkCreator } from "../store/SingleProduct";
 import EditProductForm from "./EditProductForm";
+import AddProductForm from "./AddProductForm";
 
 class AdminDash extends React.Component {
   constructor() {
@@ -27,6 +28,7 @@ class AdminDash extends React.Component {
     event.preventDefault();
     const productId = event.target.value;
     this.setState({
+      ...this.state,
       displayEditForm: productId,
     });
     console.log("state was set...", this.state);
@@ -86,6 +88,7 @@ class AdminDash extends React.Component {
                 })}
               </tbody>
             </table>
+            <AddProductForm />
             <h3>Users</h3>
             <table>
               <thead>
