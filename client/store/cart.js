@@ -56,7 +56,7 @@ export function getOrderEntriesThunkCreator() {
         });
         
         // The userData that we just retrieved will contain the user Id that
-        // we will put as a wildcard parameter on our route below, which will
+        // we will put as a wildcard parameter on the route below, which will
         // retrieve all orderEntries so we can render this specific user's cart.
         const { orderData } = await axios.get(`/api/cart/${userData.id}`);
         dispatch(_getOrderEntries(orderData));
@@ -117,7 +117,7 @@ export default function (state = initialState, action) {
       return [...state, action.orderEntry];
 
     // I believe that the UPDATE and DELETE cases should both return an object
-    // instead of an array, but I had no way to test/confirm so this may need to be changed.
+    // instead of an array, but I didn't know how to test/confirm so this may need to be changed.
     case UPDATE_ORDER_ENTRY:
       return { ...state, ...action.orderEntry };
 
@@ -127,4 +127,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
