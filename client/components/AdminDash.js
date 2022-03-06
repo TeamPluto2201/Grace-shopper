@@ -24,7 +24,7 @@ class AdminDash extends React.Component {
   }
 
   editProduct(event) {
-    //event.preventDefault();
+    event.preventDefault();
     const productId = event.target.value;
     this.setState({
       displayEditForm: productId,
@@ -55,35 +55,34 @@ class AdminDash extends React.Component {
               </thead>
               <tbody>
                 {productsToRender.map((element) => {
-                  return (
-                    <tr key={element.id}>
-                      <td className="td-img">
-                        <img src={element.imgPath} style={{ width: "100px" }} />
-                      </td>
-                      <td>{element.designName}</td>
-                      <td>{element.id}</td>
-                      <td>${element.price}</td>
-                      <td>
-                        <button value={element.id} onClick={this.editProduct}>
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => {
-                            this.props.deleteProduct(element.id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                      <td>
-                        {this.state.displayEditForm === element.id ? (
-                          <div>
-                            <EditProductForm />
-                          </div>
-                        ) : null}
-                      </td>
-                    </tr>
-                  );
+                  if (element.id === this.state.displayEditForm) {
+                    return (
+                      <EditProductForm />
+                    )
+                  } else {
+                    return (
+                      <tr key={element.id}>
+                        <td className="td-img">
+                          <img src={element.imgPath} style={{ width: "100px" }} />
+                        </td>
+                        <td>{element.designName}</td>
+                        <td>{element.id}</td>
+                        <td>${element.price}</td>
+                        <td>
+                          <button value={element.id} onClick={this.editProduct}>
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              this.props.deleteProduct(element.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  }
                 })}
               </tbody>
             </table>
