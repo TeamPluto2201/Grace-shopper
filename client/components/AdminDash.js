@@ -57,6 +57,8 @@ class AdminDash extends React.Component {
               </thead>
               <tbody>
                 {productsToRender.map((element) => {
+                  // I added the below "if" condition to try and display the EditProductForm
+                  // component based on the local state, but it's not rendering.
                   if (element.id === this.state.displayEditForm) {
                     return (
                       <EditProductForm />
@@ -103,9 +105,10 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
-                      <td>{element.isAdmin}</td>
+                      <td>{element.isAdmin.toString() === 'true' ? 'YES' : 'NO' }</td>
                       <td>
-                        <button>Make admin</button>
+                        <button>Make Admin</button>
+                        <button>Delete</button>
                       </td>
                     </tr>
                   );

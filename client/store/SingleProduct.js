@@ -45,7 +45,6 @@ export function getProductThunkCreator(id) {
 export function createProductThunkCreator(product) {
   try {
     return async (dispatch) => {
-      console.log('Inside createProductThunkCreator ....', product)
       const { data } = await axios.post('/api/products', product);
       dispatch(_createProduct(data));
     };

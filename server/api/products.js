@@ -14,11 +14,9 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log('inside POST request...')
     const productToCreate = await Product.create(req.body);
     res.send(productToCreate);
   } catch(err) {
-    console.log("Error inside POST request:", err)
     next(err);
   };
 });
