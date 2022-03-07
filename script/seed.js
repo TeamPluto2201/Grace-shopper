@@ -29,7 +29,7 @@ async function seed() {
     User.create({ username: 'laurynn', password: '123' }),
     User.create({ username: 'safa', password: '123' }),
     User.create({ username: 'kloe', password: '123' }),
-    User.create({ username:  'lottie', password: '123' }),
+    User.create({ username: 'lottie', password: '123' }),
     User.create({ username: 'arandeep', password: '123' }),
     User.create({ username: 'hallam', password: '123' }),
     User.create({ username: 'aysha', password: '123' }),
@@ -70,7 +70,7 @@ async function seed() {
 
   // Creating Orders
   const orders = await Promise.all([
-    Order.create({ purchased: false }), 
+    Order.create({ purchased: false }),
     Order.create({ purchased: true }),
     Order.create({ purchased: false }),
     Order.create({ purchased: true }),
@@ -443,7 +443,8 @@ async function seed() {
 
   //User 11 orders
   await users[11].addOrder(orders[24]);
- 
+
+  
   //User 12 orders
   await users[12].addOrder(orders[25]);
   await orderEntries[60].setOrder(orders[25]);
