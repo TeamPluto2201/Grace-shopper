@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { getOrderEntryThunkCreator } from "../store/cart";
 
-class CartItem extends React.Component {
-  constructor() {
-    super();
+export default class CartItem extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       size: "",
       color: "",
@@ -16,13 +17,14 @@ class CartItem extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getOrderEntry();
+    // await this.props.getOrderEntry(this.props.auth.id);
+    console.log("HERE!!!!!!!!orderEntry mounted");
   }
 
   render() {
     console.log("props--->", this.props);
 
-    return props.entryArray.map((entry) => {
+    return this.props.entryArray.map((entry) => {
       return (
         <div id='productCardAllView' key={entry.id}>
           <img id='shirtImgAll' src={entry.productId.imgPath} />
@@ -38,18 +40,19 @@ class CartItem extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    orderEntry: state.orderEntry,
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     orderEntry: state.orderEntry,
+//     auth: state.auth,
+//   };
+// }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getOrderEntry: () => {
-      dispatch(getOrderEntryThunkCreator());
-    },
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     getOrderEntry: (id) => {
+//       dispatch(getOrderEntryThunkCreator(id));
+//     },
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+// export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
