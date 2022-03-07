@@ -127,7 +127,7 @@ class AdminDash extends React.Component {
       </div>
     );
   }
-}
+};
 
 function mapStateToProps(state) {
   return {
@@ -135,7 +135,7 @@ function mapStateToProps(state) {
     users: state.users,
     isAdmin: !!state.auth.isAdmin,
   };
-}
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -152,10 +152,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(deleteProductThunkCreator(id));
     },
     makeAdmin: (user) => {
-      // user.isAdmin = true;
       dispatch(makeAdminThunkCreator(user));
     }
   };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminDash);

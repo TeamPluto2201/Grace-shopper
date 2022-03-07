@@ -52,11 +52,10 @@ export default function(state = initialState, action) {
         case GET_USERS:
             return action.users;
         case MAKE_ADMIN:
-            //return [...state, ...action.user];
             return state.map((element) => {
-                if (element.id === action.user.id) return action.user
-                else return element
-            })
+                if (element.id === action.user.id) return action.user;
+                else return element;
+            });
         default:
             return state;
     };
