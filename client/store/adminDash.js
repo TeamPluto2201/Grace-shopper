@@ -28,6 +28,7 @@ export function getUsersThunkCreator() {
         return async (dispatch) => {
             //first retrieve the users token from localstorage
             const token = window.localStorage.getItem('token')
+            console.log('TOKEN -->', token)
 
             //make an axios get request to '/api/users'.
             //make sure to set the header with the token, so that the route

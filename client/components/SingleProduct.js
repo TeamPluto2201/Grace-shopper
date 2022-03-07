@@ -27,7 +27,7 @@ class SingleProduct extends React.Component {
             <div key={this.props.match.params.id}>
               <img src={this.props.product.imgPath} />
               <div>{this.props.product.designName}</div>
-              <div>${this.props.product.price}</div>
+              <div>${(this.props.product.price/100).toFixed(2)}</div>
             </div>
             <div><OrderEntryForm productId={this.props.match.params.id} /></div>
           </div>

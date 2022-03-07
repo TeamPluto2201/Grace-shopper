@@ -8,6 +8,10 @@ const {
 //route for getting all the outstanding orderentries to render in a cart for a user.
 router.get("/:userId", async (req, res, next) => {
   try {
+
+    // req.headers.authorization = token
+    // const user = await User.findByToken(req.headers.authorization)
+
     const order = await Order.findAll({
       where: {
         userId: req.params.userId,
