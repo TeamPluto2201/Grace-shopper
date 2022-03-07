@@ -6,6 +6,7 @@ const User = require("./models/User");
 const OrderEntry = require("./models/OrderEntry");
 const Order = require("./models/Order");
 const Product = require("./models/Product");
+const Color = require("./models/Color")
 
 //associations could go here!
 
@@ -19,12 +20,16 @@ OrderEntry.belongsTo(Order);
 OrderEntry.belongsTo(Product);
 Product.hasMany(OrderEntry);
 
+OrderEntry.belongsTo(Color);
+Color.hasMany(OrderEntry)
+
 module.exports = {
   db,
   models: {
     User,
     Order,
     OrderEntry,
-    Product
+    Product,
+    Color
   },
 };

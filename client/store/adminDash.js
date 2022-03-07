@@ -16,10 +16,19 @@ const _getUsers = (users) => {
 
 // Thunk creators
 export function getUsersThunkCreator() {
-    console.log('inside getUsersThunkCreator...')
     try {
         return async (dispatch) => {
-            const { data } = await axios.get('api/users');
+            //first retrieve the users token from localstorage
+            const token = window.localStorage.getItem('token')
+
+            //make an axios get request to '/api/users'.
+            //make sure to set the header with the token, so that the route
+            // can use it to authenticate in the server
+            const { data } = await axios.get('/api/users', {
+                headers: {
+                    authorization: token
+                }
+            })
             dispatch(_getUsers(data));
         };
     } catch (err) {
