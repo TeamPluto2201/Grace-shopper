@@ -12,12 +12,17 @@ router.get("/:userId", async (req, res, next) => {
     // req.headers.authorization = token
     // const user = await User.findByToken(req.headers.authorization)
 
+    // JOE CR: A .findOne() can be used here if you only expect and want to use one.
+    // Which eliminates the need for order[0]
     const order = await Order.findAll({
       where: {
         userId: req.params.userId,
         purchased: false,
       },
     });
+    // JOE CR: This doesn't need to be a separate query, although it's okay.
+    // More performant would be eager loading added to the previous query that loads
+    // associated OrderEntry and does a *nested* eager load for model: Product
     const cart = await OrderEntry.findAll({
       include: {
         model: Product,

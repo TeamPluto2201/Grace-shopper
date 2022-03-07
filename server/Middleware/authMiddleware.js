@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 
+// JOE CR: What was the plan here?
 const requireAuth = (req, res, next) => {
     // const token = req.cookies.jwt
     console.log('req',req)
