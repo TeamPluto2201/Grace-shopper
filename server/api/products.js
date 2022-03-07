@@ -12,6 +12,15 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    const productToCreate = await Product.create(req.body);
+    res.send(productToCreate);
+  } catch(err) {
+    next(err);
+  };
+});
+
 router.get("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
@@ -20,6 +29,16 @@ router.get("/:id", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const productToDelete = await Product.findByPk(req.params.id);
+    await productToDelete.destroy();
+    res.send(productToDelete);
+  } catch(err) {
+    next(err);
+  };
 });
 
 module.exports = router;

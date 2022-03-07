@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { DELETE_PRODUCT, CREATE_PRODUCT } from './SingleProduct';
 
 const initialState = [];
 
@@ -30,6 +31,14 @@ export default function(state = initialState, action) {
     switch (action.type) {
       case GET_PRODUCTS:
         return action.products
+
+      case CREATE_PRODUCT:
+        return [...state, action.product]
+      
+      case DELETE_PRODUCT:
+        return state.filter((element) => { 
+          return element.id !== action.product.id
+        })
       default:
         return state
     }

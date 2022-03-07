@@ -2,16 +2,36 @@ import React from "react";
 import { connect } from "react-redux";
 import { Switch, Link } from "react-router-dom";
 import { getProductsThunkCreator } from "../store/allProducts";
-import { getUsersThunkCreator } from "../store/adminDash";
+import { getUsersThunkCreator, makeAdminThunkCreator } from "../store/adminDash";
+import { deleteProductThunkCreator } from "../store/SingleProduct";
+import EditProductForm from "./EditProductForm";
+import AddProductForm from "./AddProductForm";
 
 class AdminDash extends React.Component {
   constructor() {
     super();
+    this.state = {
+      displayEditForm: 0,
+      // displayEditForm will be set to the id of the product that the
+      // admin wants to edit so that the edit form will render
+    };
+
+    this.editProduct = this.editProduct.bind(this);
   }
 
   componentDidMount() {
     this.props.loadAllProducts();
     this.props.loadAllUsers();
+  }
+
+  editProduct(event) {
+    event.preventDefault();
+    const productId = event.target.value;
+    this.setState({
+      ...this.state,
+      displayEditForm: productId,
+    });
+    console.log("state was set...", this.state);
   }
 
   render() {
@@ -37,23 +57,40 @@ class AdminDash extends React.Component {
               </thead>
               <tbody>
                 {productsToRender.map((element) => {
-                  return (
-                    <tr key={element.id}>
-                      <td className="td-img">
-                        <img src={element.imgPath} style={{ width: "100px" }} />
-                      </td>
-                      <td>{element.designName}</td>
-                      <td>{element.id}</td>
-                      <td>${element.price}</td>
-                      <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                  );
+                  // I added the below "if" condition to try and display the EditProductForm
+                  // component based on the local state, but it's not rendering.
+                  if (element.id === this.state.displayEditForm) {
+                    return (
+                      <EditProductForm />
+                    )
+                  } else {
+                    return (
+                      <tr key={element.id}>
+                        <td className="td-img">
+                          <img src={element.imgPath} style={{ width: "100px" }} />
+                        </td>
+                        <td>{element.designName}</td>
+                        <td>{element.id}</td>
+                        <td>${element.price}</td>
+                        <td>
+                          <button value={element.id} onClick={this.editProduct}>
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              this.props.deleteProduct(element.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  }
                 })}
               </tbody>
             </table>
+            <AddProductForm />
             <h3>Users</h3>
             <table>
               <thead>
@@ -68,9 +105,11 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
-                      <td>{element.isAdmin}</td>
+                      <td>{element.isAdmin.toString() === 'true' ? 'YES' : 'NO' }</td>
                       <td>
-                        <button>Edit</button>
+                        <button onClick={() => {
+                          this.props.makeAdmin(element);
+                        }}>Make Admin</button>
                         <button>Delete</button>
                       </td>
                     </tr>
@@ -88,7 +127,7 @@ class AdminDash extends React.Component {
       </div>
     );
   }
-}
+};
 
 function mapStateToProps(state) {
   return {
@@ -96,7 +135,7 @@ function mapStateToProps(state) {
     users: state.users,
     isAdmin: !!state.auth.isAdmin,
   };
-}
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -106,7 +145,16 @@ function mapDispatchToProps(dispatch) {
     loadAllUsers: () => {
       dispatch(getUsersThunkCreator());
     },
+    // editProduct: () => {
+    //   <EditProductForm />
+    // },
+    deleteProduct: (id) => {
+      dispatch(deleteProductThunkCreator(id));
+    },
+    makeAdmin: (user) => {
+      dispatch(makeAdminThunkCreator(user));
+    }
   };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminDash);

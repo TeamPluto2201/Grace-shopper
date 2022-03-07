@@ -28,6 +28,20 @@ router.get('/', async (req, res, next) => {
     next(err)
     console.log(err)
   }
-})
+});
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const [ userToUpdate ] = await User.findAll({
+      where: {
+        id: req.params.id
+      },
+      attributes: ['id', 'username', 'isAdmin']
+    })
+    res.send(await userToUpdate.update({ isAdmin: true }));
+  } catch(err) {
+    next(err);
+  };
+});
 
 module.exports = router;
