@@ -119,7 +119,8 @@ export function deleteOrderEntryThunkCreator(entryToDelete) {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ENTRIES:
-      return [...state, action.orderEntries];
+      console.log(state)
+      return [...action.orderEntries];
 
     case ADD_ORDER_ENTRY:
       return [...state, action.orderEntry];

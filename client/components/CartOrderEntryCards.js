@@ -22,17 +22,17 @@ export default class CartItem extends React.Component {
   }
 
   render() {
-    console.log("props--->", this.props);
+    console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
 
     return this.props.entryArray.map((entry) => {
       return (
         <div id='productCardAllView' key={entry.id}>
-          <img id='shirtImgAll' src={entry.productId.imgPath} />
-          <div id='designNameAll'>{entry.productId.designName}</div>
-          <div>${entry.productId.price}</div>
-          <div>{entry.QTY}</div>
-          <div>{entry.size}</div>
-          <div>{entry.color}</div>
+          <img id='shirtImgAll' src={entry.product.imgPath} />
+          <div id='designNameAll'>{entry.product.designName}</div>
+          <div>${(entry.product.price / 100).toFixed(2)}</div>
+          <div>number of items {entry.QTY}</div>
+          <div>size {entry.size}</div>
+          <div>color {entry.colorId}</div>
           <button type='button'>x</button>
         </div>
       );
