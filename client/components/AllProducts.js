@@ -20,7 +20,7 @@ class AllProducts extends React.Component {
     console.log("tshirt array", tshirtArray);
     return (
       <div id='allContainer'>
-        <h1 id='pageHeader'>All Products</h1>
+        <h1 id='pageHeader'>ALL PRODUCTS</h1>
         <div id='wrapContainer'>
           {tshirtArray.map((tShirt) => {
             return (
