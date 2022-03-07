@@ -5,12 +5,19 @@ const initialState = [];
 //should be an array of orderEntries
 
 // Action types
+// const GET_ORDER_ENTRY = "GET_ORDER_ENTRY";
 const GET_ORDER_ENTRIES = "GET_ORDER_ENTRIES";
 const ADD_ORDER_ENTRY = "ADD_ORDER_ENTRY";
 const UPDATE_ORDER_ENTRY = "UPDATE_ORDER_ENTRY";
 const DELETE_ORDER_ENTRY = "DELETE_ORDER_ENTRY";
 
 // Action creators
+// function _getOrderEntry(orderEntry) {
+//   return {
+//     type: GET_ORDER_ENTRY,
+//     orderEntry,
+//   };
+// }
 function _getOrderEntries(orderEntries) {
   return {
     type: GET_ORDER_ENTRIES,
@@ -45,30 +52,31 @@ export function getOrderEntriesThunkCreator() {
     return async (dispatch) => {
       // First retrieve the user's token
       const token = window.localStorage.getItem("token");
-     
+
       // If the token exists, put it on our header. Then, we can use the
       // token in our "me" route to send back the user.
       if (token) {
-        const { userData } = await axios.get("/auth/me", {
+        const { data } = await axios.get("/auth/me", {
           headers: {
             authorization: token,
           },
         });
-        
+
         // The userData that we just retrieved will contain the user Id that
         // we will put as a wildcard parameter on the route below, which will
         // retrieve all orderEntries so we can render this specific user's cart.
-        const { orderData } = await axios.get(`/api/cart/${userData.id}`);
-        dispatch(_getOrderEntries(orderData));
+        console.log("userData__________", data);
+        const response = await axios.get(`/api/cart/${data.id}`);
+        dispatch(_getOrderEntries(response.data));
       }
 
-      // Right now this only works for logged in users, so we need to discuss 
+      // Right now this only works for logged in users, so we need to discuss
       // how to handle guests.
     };
   } catch (err) {
     console.log("Error inside getOrderEntriesThunkCreator: ", err);
   }
-};
+}
 
 export function addOrderEntryThunkCreator(entryToCreate) {
   try {
@@ -111,7 +119,8 @@ export function deleteOrderEntryThunkCreator(entryToDelete) {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ENTRIES:
-      return action.orderEntries;
+      console.log(state)
+      return [...action.orderEntries];
 
     case ADD_ORDER_ENTRY:
       return [...state, action.orderEntry];
@@ -127,4 +136,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-};
+}

@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { getOrderEntryThunkCreator } from "../store/cart";
 
-class CartItem extends React.Component {
-  constructor() {
-    super();
+export default class CartItem extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       size: "",
       color: "",
@@ -16,21 +17,22 @@ class CartItem extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getOrderEntry();
+    // await this.props.getOrderEntry(this.props.auth.id);
+    console.log("HERE!!!!!!!!orderEntry mounted");
   }
 
   render() {
-    console.log("props--->", this.props);
+    console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
 
-    return props.entryArray.map((entry) => {
+    return this.props.entryArray.map((entry) => {
       return (
         <div id='productCardAllView' key={entry.id}>
-          <img id='shirtImgAll' src={entry.productId.imgPath} />
-          <div id='designNameAll'>{entry.productId.designName}</div>
-          <div>${entry.productId.price}</div>
-          <div>{entry.QTY}</div>
-          <div>{entry.size}</div>
-          <div>{entry.color}</div>
+          <img id='shirtImgAll' src={entry.product.imgPath} />
+          <div id='designNameAll'>{entry.product.designName}</div>
+          <div>${(entry.product.price / 100).toFixed(2)}</div>
+          <div>number of items {entry.QTY}</div>
+          <div>size {entry.size}</div>
+          <div>color {entry.colorId}</div>
           <button type='button'>x</button>
         </div>
       );
@@ -38,18 +40,19 @@ class CartItem extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    orderEntry: state.orderEntry,
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     orderEntry: state.orderEntry,
+//     auth: state.auth,
+//   };
+// }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getOrderEntry: () => {
-      dispatch(getOrderEntryThunkCreator());
-    },
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     getOrderEntry: (id) => {
+//       dispatch(getOrderEntryThunkCreator(id));
+//     },
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+// export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

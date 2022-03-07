@@ -15,7 +15,7 @@ class AllOrderEntries extends React.Component {
   }
 
   render() {
-    console.log("props--->", this.props);
+    console.log("PROPS IN CART COMPONENT--->", this.props);
     const entryArray = this.props.orderEntries || [];
 
     console.log("entry array", entryArray);
@@ -33,7 +33,7 @@ class AllOrderEntries extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    orderEntries: state.orderEntries,
+    orderEntries: state.cart,
   };
 }
 function mapDispatchToProps(dispatch) {
