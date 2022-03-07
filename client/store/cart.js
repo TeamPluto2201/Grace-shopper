@@ -125,13 +125,12 @@ export default function (state = initialState, action) {
     case ADD_ORDER_ENTRY:
       return [...state, action.orderEntry];
 
-    // I believe that the UPDATE and DELETE cases should both return an object
-    // instead of an array, but I didn't know how to test/confirm so this may need to be changed.
+    // below cases need to use .filter
     case UPDATE_ORDER_ENTRY:
-      return { ...state, ...action.orderEntry };
-
+      return [ ...state, ...action.orderEntry ];
+    
     case DELETE_ORDER_ENTRY:
-      return { ...state, ...action.orderEntry };
+      return [ ...state, ...action.orderEntry ];
 
     default:
       return state;

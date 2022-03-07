@@ -105,7 +105,7 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
-                      <td>{element.isAdmin.toString() === 'true' ? 'YES' : 'NO' }</td>
+                      <td>{element.isAdmin === true ? 'YES' : 'NO' }</td>
                       <td>
                         <button onClick={() => {
                           this.props.makeAdmin(element);
