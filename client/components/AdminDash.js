@@ -105,6 +105,7 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
+                      {/* JOE CR: No need for .toString(), I think? */}
                       <td>{element.isAdmin.toString() === 'true' ? 'YES' : 'NO' }</td>
                       <td>
                         <button onClick={() => {

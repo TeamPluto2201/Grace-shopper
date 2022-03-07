@@ -23,6 +23,7 @@ class AllOrderEntries extends React.Component {
       <div id='allContainer'>
         <h1 id='pageHeader'>MY CART</h1>
         <div id='wrapContainer'>
+          {/* JOE CR: I'm happy that some props are being passed down directly instead of reusing Redux connections! */}
           <CartItems entryArray={entryArray} />
           <CartCheckoutPrompt />
         </div>

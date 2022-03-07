@@ -54,6 +54,10 @@ class OrderEntryForm extends React.Component {
 
                     <div>
                         <label>Color</label>
+                        {/* JOE CR: This is really hard coded, and you may find a eventual ideal scenario is that you
+                            request all the possible colors from something like GET /api/colors to fill in this list.
+                            I think this is not compatible with how the database is structured right now. 
+                        */}
                         <select name='color' onChange={this.handleChange}>
                             <option value={"white"}>white</option>
                             <option value={"black"}>black</option>

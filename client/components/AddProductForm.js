@@ -26,6 +26,7 @@ class AddProductForm extends React.Component {
               <form onSubmit={this.handleSubmit}>
 
                 <label>Upload image</label>
+                {/* JOE CR: How is this working out right now? */}
                 <input type='file' name='imgPath'></input>
 
 

@@ -56,6 +56,8 @@ export function getOrderEntriesThunkCreator() {
       // If the token exists, put it on our header. Then, we can use the
       // token in our "me" route to send back the user.
       if (token) {
+        // JOE CR: This request does not seem necessary, as you probably have the information
+        // you want from the "auth" key on the Redux store. Resourceful, though!
         const { data } = await axios.get("/auth/me", {
           headers: {
             authorization: token,
@@ -66,6 +68,7 @@ export function getOrderEntriesThunkCreator() {
         // we will put as a wildcard parameter on the route below, which will
         // retrieve all orderEntries so we can render this specific user's cart.
         console.log("userData__________", data);
+        // JOE CR: Sending this request with the token would be ideal.
         const response = await axios.get(`/api/cart/${data.id}`);
         dispatch(_getOrderEntries(response.data));
       }
@@ -127,6 +130,8 @@ export default function (state = initialState, action) {
 
     // I believe that the UPDATE and DELETE cases should both return an object
     // instead of an array, but I didn't know how to test/confirm so this may need to be changed.
+    // JOE CR: If this slice of Redux state nominally represents an array, then it should always
+    // be returning an array and not an object.
     case UPDATE_ORDER_ENTRY:
       return { ...state, ...action.orderEntry };
 
