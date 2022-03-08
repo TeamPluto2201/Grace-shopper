@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Switch, Link } from "react-router-dom";
 import { getProductsThunkCreator } from "../store/allProducts";
-import { getUsersThunkCreator, makeAdminThunkCreator } from "../store/adminDash";
+import { getUsersThunkCreator, toggleAdminThunkCreator } from "../store/adminDash";
 import { deleteProductThunkCreator } from "../store/SingleProduct";
 import EditProductForm from "./EditProductForm";
 import AddProductForm from "./AddProductForm";
@@ -108,8 +108,8 @@ class AdminDash extends React.Component {
                       <td>{element.isAdmin === true ? 'YES' : 'NO' }</td>
                       <td>
                         <button onClick={() => {
-                          this.props.makeAdmin(element);
-                        }}>Make Admin</button>
+                          this.props.toggleAdmin(element);
+                        }}>Toggle Admin</button>
                         <button>Delete</button>
                       </td>
                     </tr>
@@ -151,8 +151,8 @@ function mapDispatchToProps(dispatch) {
     deleteProduct: (id) => {
       dispatch(deleteProductThunkCreator(id));
     },
-    makeAdmin: (user) => {
-      dispatch(makeAdminThunkCreator(user));
+    toggleAdmin: (user) => {
+      dispatch(toggleAdminThunkCreator(user));
     }
   };
 };

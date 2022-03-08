@@ -45,11 +45,10 @@ export function getUsersThunkCreator() {
     };
 };
 
-export function makeAdminThunkCreator(user) {
+export function toggleAdminThunkCreator(user) {
     try {
         return async (dispatch) => {
             const { data } = await axios.put(`/api/users/${user.id}`);
-            console.log('DATA >>>>', data)
             dispatch(_makeAdmin(data));
         };
     } catch (err) {
