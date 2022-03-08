@@ -46,6 +46,14 @@ class CartItem extends React.Component {
     this.setState({ id: event.target.value })
   }
 
+  handleRemove(event) {
+    event.preventDefault();
+    const currentCart = JSON.parse(localStorage.getItem('guestOrder'));
+    const targetIdx = event.target.value;
+    currentCart.splice(targetIdx, 1);
+    localStorage.setItem('guestOrder', JSON.stringify(currentCart));
+  };
+
   async componentDidMount() {
     // await this.props.getOrderEntry(this.props.auth.id);
     console.log("HERE!!!!!!!!orderEntry mounted");
@@ -85,7 +93,7 @@ class CartItem extends React.Component {
 
     let cartArray = this.props.entryArray
 
-    if(cartArray.length == 0) {
+    if(!this.props.isLoggedIn) {
       cartArray = JSON.parse(localStorage.getItem('guestOrder'))
 
       return cartArray.map((entry) => {
@@ -134,7 +142,7 @@ class CartItem extends React.Component {
   
             </form>
   
-            <button onClick={this.handleClick} value={entry.id} type='button'>Remove Item</button>
+            <button onClick={this.handleRemove} value={cartArray.indexOf(entry)} type='button'>Remove Item</button>
           </div>
         );
       });
@@ -198,12 +206,11 @@ class CartItem extends React.Component {
 
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     orderEntry: state.orderEntry,
-//     auth: state.auth,
-//   };
-// }
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.isLoggedIn
+  };
+}
 
 // function mapDispatchToProps(dispatch) {
 //   return {
