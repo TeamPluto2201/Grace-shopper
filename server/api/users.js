@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const { models: { User }} = require('../db')
+
+const { models: { User } } = require('../db')
 
 
 // if we have a token, use that token to find information about the user from the database
@@ -16,9 +17,13 @@ router.get('/', async (req, res, next) => {
         } else {
           res.status(401).send('Not authenticated')
         }
+
       } else {
         res.status(401).send('Not authenticated')
       }
+    } else {
+      res.redirect('/')
+    }
   } catch (err) {
     next(err)
   }
@@ -29,6 +34,7 @@ router.put('/:id', async (req, res, next) => {
     const userToUpdate = await User.findByPk(req.params.id);
     res.send(await userToUpdate.update({ isAdmin: !userToUpdate.isAdmin }));
   } catch(err) {
+
     next(err);
   };
 });
