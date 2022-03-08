@@ -42,9 +42,7 @@ class OrderEntryForm extends React.Component {
       //needs to be able to add to a cart regardless of whether someone is logged in or not.
       //call a thunk that creates a new orderEntry item
     } else {
-      if (!localStorage.guestOrder) {
-        localStorage.setItem("guestOrder", []);
-      }
+      event.preventDefault();
       //create object of orderEntry,
       const newlyPlacedGuestOrderEntry = {
         size: this.state.size,
@@ -53,11 +51,20 @@ class OrderEntryForm extends React.Component {
         productId: this.props.productId,
         orderId: -1,
       };
-
-      //   //push that object to local storage in an array of order Entries whose order id = -1
-      const updateStorage = localStorage.getItem("guestOrder");
+      if (!localStorage.guestOrder) {
+        // localStorage.setItem("guestOrder", ['HELLOOOOO']);
+        //const updateStorage = localStorage.getItem("guestOrder");
+        const updateStorage = [];
       updateStorage.push(newlyPlacedGuestOrderEntry);
-      localStorage.setItem("guestOrder", updateStorage);
+      console.log('UPDATE STORAGE #1 >>>>>>>>>>', updateStorage);
+      localStorage.setItem('guestOrder', JSON.stringify(updateStorage));
+      } else {
+        //push that object to local storage in an array of order Entries whose order id = -1
+        const addToStorage = JSON.parse(localStorage.getItem('guestOrder'));
+        console.log("ADD TO STORAGE >>>>>", typeof addToStorage)
+        addToStorage.push(newlyPlacedGuestOrderEntry);
+        localStorage.setItem('guestOrder', JSON.stringify(addToStorage));
+      }
     }
   }
 
