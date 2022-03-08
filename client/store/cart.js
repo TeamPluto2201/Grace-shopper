@@ -67,6 +67,7 @@ export function getOrderEntriesThunkCreator() {
         // retrieve all orderEntries so we can render this specific user's cart.
         console.log("userData__________", data);
         const response = await axios.get(`/api/cart/${data.id}`);
+        console.log('this should be a list of order entries',response)
         dispatch(_getOrderEntries(response.data));
       }
 
@@ -89,6 +90,7 @@ export function addOrderEntryThunkCreator(entryToCreate) {
     }
   }
       );
+      console.log('DATA response from axios post',data)
       dispatch(_addOrderEntry(data));
     } catch (err) {
     console.log("Error inside addOrderEntryThunkCreator: ", err);
@@ -127,9 +129,10 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ENTRIES:
       console.log(state)
-      return [...action.orderEntries];
+      return [...state, action.orderEntries];
 
     case ADD_ORDER_ENTRY:
+      console.log('STATE inside add order entry redux -->',state)
       return [...state, action.orderEntry];
 
     // I believe that the UPDATE and DELETE cases should both return an object

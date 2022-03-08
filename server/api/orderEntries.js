@@ -20,19 +20,28 @@ router.post("/", async (req, res, next) => {
         purchased: false,
       },
     });
+    // console.log('CURRENT ORDER -->', currentOrder.dataValues)
+
+    let currentOrNewOrderId;
 
     if (!currentOrder) {
-      const newOrder = { userId: id }
-      await Order.create(newOrder)
+      const newOrder = await Order.create({ userId: id })
+      currentOrNewOrderId = newOrder.id
+    } else {
+      currentOrNewOrderId = currentOrder.id
     }
+    
+
 
     const newlyPlacedOrder = {
       size: req.body.size,
       colorId: req.body.color,
       QTY: req.body.QTY,
       productId: req.body.productId,
-      orderId: currentOrder.id,
+      orderId: currentOrNewOrderId,
     };
+
+    console.log('NEWLY PLACED ORDER OBJ inside /api/orderEntries post request--->' , newlyPlacedOrder)
 
     currentOrder = await Order.findOne({
       where: {

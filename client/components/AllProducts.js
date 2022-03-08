@@ -24,8 +24,8 @@ class AllProducts extends React.Component {
         <div id="wrapContainer">
           {tshirtArray.map((tShirt) => {
             return (
-              <div>
-                <div id="productCardAllView" key={tShirt.id}></div>
+              <div key={tShirt.id}>
+                <div id="productCardAllView" ></div>
                 <img id="shirtImgAll" src={tShirt.imgPath} />
                 <Link id="designNameAll" to={`/products/${tShirt.id}`}>{tShirt.designName}</Link>
                 <div>${(tShirt.price / 100).toFixed(2)}</div>
