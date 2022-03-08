@@ -41,18 +41,9 @@ router.post("/", async (req, res, next) => {
       orderId: currentOrNewOrderId,
     };
 
-    console.log('NEWLY PLACED ORDER OBJ inside /api/orderEntries post request--->' , newlyPlacedOrder)
-
-    currentOrder = await Order.findOne({
-      where: {
-        userId: id,
-        purchased: false,
-      },
-    });
-
-  
     //use that object to create a new order entry
     const orderEntry = await OrderEntry.create(newlyPlacedOrder);
+    console.log('ORDER ENTRY NEWLY CREATED -->',orderEntry)
     res.send(orderEntry);
   } catch (err) {
     next(err);
