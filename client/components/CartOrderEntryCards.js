@@ -78,7 +78,9 @@ class CartItem extends React.Component {
 
 
   render() {
+   
     console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
+
     console.log("this.props.entryArray", this.props.entryArray)
 
     return this.props.entryArray.map((entry) => {

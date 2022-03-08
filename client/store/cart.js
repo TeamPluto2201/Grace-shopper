@@ -67,15 +67,23 @@ export function getOrderEntriesThunkCreator() {
 }
 
 export function addOrderEntryThunkCreator(entryToCreate) {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post("/api/orderEntries", entryToCreate);
+    return async (dispatch) => {
+      try {
+      const token = window.localStorage.getItem('token')
+      console.log('NEW ORDER inside Cart store -->', entryToCreate)
+      const { data } = await axios.post("/api/orderEntries", entryToCreate, {
+      headers: {
+        authorization: token
+    }
+  }
+      );
+      console.log('DATA response from axios post',data)
       dispatch(_addOrderEntry(data));
-    }
-    catch (err) {
-      console.log("Error inside addOrderEntryThunkCreator: ", err);
-    }
-  };
+    } catch (err) {
+    console.log("Error inside addOrderEntryThunkCreator: ", err);
+  }
+
+}
 }
 
 export function updateOrderEntryThunkCreator(entryToUpdate) {
@@ -95,6 +103,7 @@ export function updateOrderEntryThunkCreator(entryToUpdate) {
 }
 
 export function deleteOrderEntryThunkCreator(entryToDelete) {
+
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
@@ -106,6 +115,7 @@ export function deleteOrderEntryThunkCreator(entryToDelete) {
       console.log("Error inside deleteOrderEntryThunkCreator", err);
     }
   };
+}
 }
 
 export default function (state = initialState, action) {
