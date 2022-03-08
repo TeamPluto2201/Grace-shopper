@@ -4,15 +4,28 @@ import { Link } from "react-router-dom";
 import { getOrderEntriesThunkCreator } from "../store/cart";
 import CartItems from "./CartOrderEntryCards";
 import CartCheckoutPrompt from "./CartCheckoutPropmt";
+import { OrderConfirmation } from "./OrderConfirmation";
 
 class AllOrderEntries extends React.Component {
   constructor() {
     super();
-  }
+    this.state = {
+      checkedOut: false,
+    };
+
+    this.completeCheckout = this.completeCheckout.bind(this);
+  };
 
   async componentDidMount() {
     await this.props.getAllOrderEntries();
   }
+
+  completeCheckout() {
+    console.log('completeCheckout initiated...');
+    this.setState({
+      checkedOut: true,
+    });
+  };
 
   render() {
     console.log("PROPS IN CART COMPONENT--->", this.props);
@@ -20,13 +33,19 @@ class AllOrderEntries extends React.Component {
 
     console.log("entry array", entryArray);
     return (
-      <div id='allContainer'>
-        <h1 id='pageHeader'>MY CART</h1>
+      <div>
+        {this.state.checkedOut === true ? (
+        <OrderConfirmation />
+        ) : (
+          <div id='allContainer'>
+          <h1 id='pageHeader'>MY CART</h1>
         <div id='wrapContainer'>
           <CartItems entryArray={entryArray} />
-          <CartCheckoutPrompt />
+          <CartCheckoutPrompt completeCheckout={this.completeCheckout.bind(this)}/>
         </div>
-      </div>
+        </div>
+        ) }
+        </div>
     );
   }
 }
