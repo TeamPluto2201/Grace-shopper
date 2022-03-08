@@ -31,8 +31,6 @@ router.post("/", async (req, res, next) => {
       currentOrNewOrderId = currentOrder.id
     }
     
-
-
     const newlyPlacedOrder = {
       size: req.body.size,
       colorId: req.body.color,

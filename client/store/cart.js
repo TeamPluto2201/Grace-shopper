@@ -48,35 +48,21 @@ function _deleteOrderEntry(orderEntry) {
 
 // Thunk creators
 export function getOrderEntriesThunkCreator() {
-  try {
-    return async (dispatch) => {
-      // First retrieve the user's token
-      const token = window.localStorage.getItem("token");
-
-      // If the token exists, put it on our header. Then, we can use the
-      // token in our "me" route to send back the user.
-      if (token) {
-        const { data } = await axios.get("/auth/me", {
-          headers: {
-            authorization: token,
-          },
-        });
-
-        // The userData that we just retrieved will contain the user Id that
-        // we will put as a wildcard parameter on the route below, which will
-        // retrieve all orderEntries so we can render this specific user's cart.
-        console.log("userData__________", data);
-        const response = await axios.get(`/api/cart/${data.id}`);
-        console.log('this should be a list of order entries',response)
+  return async (dispatch, getState) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(`/api/cart`, { headers: { authorization: token } });
         dispatch(_getOrderEntries(response.data));
       }
-
-      // Right now this only works for logged in users, so we need to discuss
-      // how to handle guests.
-    };
-  } catch (err) {
-    console.log("Error inside getOrderEntriesThunkCreator: ", err);
+      catch (err) {
+        console.log("Error inside getOrderEntriesThunkCreator: ", err);
+      }
+    }
   }
+
+  // Right now this only works for logged in users, so we need to discuss
+  // how to handle guests.
 }
 
 export function addOrderEntryThunkCreator(entryToCreate) {
@@ -113,35 +99,36 @@ export function updateOrderEntryThunkCreator(entryToUpdate) {
 }
 
 export function deleteOrderEntryThunkCreator(entryToDelete) {
-  try {
     return async (dispatch) => {
-      const { data } = await axios.delete(
-        `/api/orderEntries/${entryToDelete.id}`
-      );
-      dispatch(_deleteOrderEntry(data));
-    };
+      try{
+        const { data } = await axios.delete(
+          `/api/orderEntries/${entryToDelete.id}`
+        );
+        dispatch(_deleteOrderEntry(data));
   } catch (err) {
     console.log("Error inside deleteOrderEntryThunkCreator", err);
   }
+}
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ENTRIES:
-      console.log(state)
-      return [...state, action.orderEntries];
+      // console.log(state)
+      return [...action.orderEntries];
 
     case ADD_ORDER_ENTRY:
-      console.log('STATE inside add order entry redux -->',state)
       return [...state, action.orderEntry];
 
-    // I believe that the UPDATE and DELETE cases should both return an object
-    // instead of an array, but I didn't know how to test/confirm so this may need to be changed.
+    // below cases need to use .filter
     case UPDATE_ORDER_ENTRY:
-      return { ...state, ...action.orderEntry };
+      // return [...state, ...action.orderEntry];
+      // return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id }).concat(action.orderEntry)
+      return [...(state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })), action.orderEntry]
 
     case DELETE_ORDER_ENTRY:
-      return { ...state, ...action.orderEntry };
+      // return [...state, ...action.orderEntry];
+      return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })
 
     default:
       return state;
