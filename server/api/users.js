@@ -1,3 +1,4 @@
+
 const router = require('express').Router()
 
 
@@ -30,14 +31,15 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
+
     const userToUpdate = await User.findByPk(req.params.id);
     res.send(await userToUpdate.update({ isAdmin: !userToUpdate.isAdmin }));
   } catch(err) {
 
     next(err);
-  };
+  }
 });
 
 module.exports = router;

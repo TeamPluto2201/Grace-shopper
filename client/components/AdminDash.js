@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Switch, Link } from "react-router-dom";
 import { getProductsThunkCreator } from "../store/allProducts";
+
 import { getUsersThunkCreator, toggleAdminThunkCreator } from "../store/adminDash";
 import { deleteProductThunkCreator } from "../store/SingleProduct";
 import EditProductForm from "./EditProductForm";
@@ -60,18 +61,20 @@ class AdminDash extends React.Component {
                   // I added the below "if" condition to try and display the EditProductForm
                   // component based on the local state, but it's not rendering.
                   if (element.id === this.state.displayEditForm) {
-                    return (
-                      <EditProductForm />
-                    )
+                    return <EditProductForm />;
                   } else {
+                    3;
                     return (
                       <tr key={element.id}>
-                        <td className="td-img">
-                          <img src={element.imgPath} style={{ width: "100px" }} />
+                        <td className='td-img'>
+                          <img
+                            src={element.imgPath}
+                            style={{ width: "100px" }}
+                          />
                         </td>
                         <td>{element.designName}</td>
                         <td>{element.id}</td>
-                        <td>${element.price}</td>
+                        <td>${(element.price / 100).toFixed(2)}</td>
                         <td>
                           <button value={element.id} onClick={this.editProduct}>
                             Edit
@@ -85,7 +88,7 @@ class AdminDash extends React.Component {
                           </button>
                         </td>
                       </tr>
-                    )
+                    );
                   }
                 })}
               </tbody>
@@ -105,8 +108,8 @@ class AdminDash extends React.Component {
                   return (
                     <tr key={element.id}>
                       <td>{element.username}</td>
-                      <td>{element.isAdmin === true ? 'YES' : 'NO' }</td>
                       <td>
+
                         <button onClick={() => {
                           this.props.toggleAdmin(element);
                         }}>Toggle Admin</button>
@@ -127,7 +130,7 @@ class AdminDash extends React.Component {
       </div>
     );
   }
-};
+}
 
 function mapStateToProps(state) {
   return {
@@ -135,7 +138,7 @@ function mapStateToProps(state) {
     users: state.users,
     isAdmin: !!state.auth.isAdmin,
   };
-};
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -151,10 +154,11 @@ function mapDispatchToProps(dispatch) {
     deleteProduct: (id) => {
       dispatch(deleteProductThunkCreator(id));
     },
+
     toggleAdmin: (user) => {
       dispatch(toggleAdminThunkCreator(user));
     }
   };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminDash);

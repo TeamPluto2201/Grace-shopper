@@ -28,6 +28,7 @@ export function getUsersThunkCreator() {
       //first retrieve the users token from localstorage
       const token = window.localStorage.getItem("token");
 
+
       //make an axios get request to '/api/users'.
       //make sure to set the header with the token, so that the route
       // can use it to authenticate in the server
@@ -39,9 +40,11 @@ export function getUsersThunkCreator() {
       dispatch(_getUsers(data));
     } catch (err) {
       console.log("Error inside getUsersThunkCreator: ", err);
+
     }
   };
 }
+
 
 export function toggleAdminThunkCreator(user) {
   try {
