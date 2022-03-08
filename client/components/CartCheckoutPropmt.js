@@ -18,7 +18,7 @@ class CartItem extends React.Component {
       <div>
         {/* <div> total {order.total} </div>
         <div> total QTY </div> */}
-        <button type='button'>Checkout</button>
+        <button type='button' onClick={this.props.completeCheckout}>Checkout</button>
       </div>
     );
   }

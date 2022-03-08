@@ -8,6 +8,7 @@ import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import AdminDash from "./components/AdminDash";
 import Cart from "./components/Cart";
+import { OrderConfirmation } from "./components/OrderConfirmation";
 
 /**
  * COMPONENT
@@ -56,6 +57,7 @@ class Routes extends Component {
         <Route exact path='/products/:id' component={SingleProduct} />
         <Route exact path='/admin' component={AdminDash} />
         <Route exact path='/cart' component={Cart} />
+        <Route exact path='/confirm' component={OrderConfirmation} />
       </div>
     );
   }

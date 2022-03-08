@@ -1,5 +1,6 @@
 import axios from "axios";
 import history from "../history";
+import store from "./index.js";
 
 const initialState = [];
 //should be an array of orderEntries
@@ -48,78 +49,79 @@ function _deleteOrderEntry(orderEntry) {
 
 // Thunk creators
 export function getOrderEntriesThunkCreator() {
-  try {
-    return async (dispatch) => {
-      // First retrieve the user's token
-      const token = window.localStorage.getItem("token");
-
-      // If the token exists, put it on our header. Then, we can use the
-      // token in our "me" route to send back the user.
-      if (token) {
-        const { data } = await axios.get("/auth/me", {
-          headers: {
-            authorization: token,
-          },
-        });
-
-        // The userData that we just retrieved will contain the user Id that
-        // we will put as a wildcard parameter on the route below, which will
-        // retrieve all orderEntries so we can render this specific user's cart.
-        console.log("userData__________", data);
-        const response = await axios.get(`/api/cart/${data.id}`);
+  return async (dispatch, getState) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(`/api/cart`, { headers: { authorization: token } });
         dispatch(_getOrderEntries(response.data));
       }
-
-      // Right now this only works for logged in users, so we need to discuss
-      // how to handle guests.
-    };
-  } catch (err) {
-    console.log("Error inside getOrderEntriesThunkCreator: ", err);
+      catch (err) {
+        console.log("Error inside getOrderEntriesThunkCreator: ", err);
+      }
+    }
   }
+
+  // Right now this only works for logged in users, so we need to discuss
+  // how to handle guests.
 }
 
 export function addOrderEntryThunkCreator(entryToCreate) {
-  try {
     return async (dispatch) => {
-      const { data } = await axios.post("/api/orderEntries", entryToCreate);
+      try {
+      const token = window.localStorage.getItem('token')
+      console.log('NEW ORDER inside Cart store -->', entryToCreate)
+      const { data } = await axios.post("/api/orderEntries", entryToCreate, {
+      headers: {
+        authorization: token
+    }
+  }
+      );
+      console.log('DATA response from axios post',data)
       dispatch(_addOrderEntry(data));
-    };
-  } catch (err) {
+    } catch (err) {
     console.log("Error inside addOrderEntryThunkCreator: ", err);
   }
+
+}
 }
 
 export function updateOrderEntryThunkCreator(entryToUpdate) {
-  try {
-    return async (dispatch) => {
+
+  return async (dispatch) => {
+    try {
       const { data } = await axios.put(
         `/api/orderEntries/${entryToUpdate.id}`,
         entryToUpdate
       );
       dispatch(_updateOrderEntry(data));
+    }
+    catch (err) {
+      console.log("Error inside updateOrderEntryThunkCreator", err);
     };
-  } catch (err) {
-    console.log("Error inside updateOrderEntryThunkCreator", err);
   }
 }
 
 export function deleteOrderEntryThunkCreator(entryToDelete) {
-  try {
-    return async (dispatch) => {
+
+  return async (dispatch) => {
+    try {
       const { data } = await axios.delete(
-        `/api/orderEntries/${entryToDelete.id}`
+        `/api/orderEntries/${entryToDelete}`
       );
       dispatch(_deleteOrderEntry(data));
-    };
-  } catch (err) {
-    console.log("Error inside deleteOrderEntryThunkCreator", err);
-  }
+    }
+    catch (err) {
+      console.log("Error inside deleteOrderEntryThunkCreator", err);
+    }
+  };
+}
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ENTRIES:
-      console.log(state)
+      // console.log(state)
       return [...action.orderEntries];
 
     case ADD_ORDER_ENTRY:
@@ -127,10 +129,13 @@ export default function (state = initialState, action) {
 
     // below cases need to use .filter
     case UPDATE_ORDER_ENTRY:
-      return [ ...state, ...action.orderEntry ];
-    
+      // return [...state, ...action.orderEntry];
+      // return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id }).concat(action.orderEntry)
+      return [...(state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })), action.orderEntry]
+
     case DELETE_ORDER_ENTRY:
-      return [ ...state, ...action.orderEntry ];
+      // return [...state, ...action.orderEntry];
+      return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })
 
     default:
       return state;

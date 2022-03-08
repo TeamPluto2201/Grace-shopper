@@ -27,7 +27,7 @@ export function getUsersThunkCreator() {
     try {
       //first retrieve the users token from localstorage
       const token = window.localStorage.getItem("token");
-      console.log("TOKEN -->", token);
+
 
       //make an axios get request to '/api/users'.
       //make sure to set the header with the token, so that the route
@@ -40,20 +40,21 @@ export function getUsersThunkCreator() {
       dispatch(_getUsers(data));
     } catch (err) {
       console.log("Error inside getUsersThunkCreator: ", err);
+
     }
   };
 }
 
-export function makeAdminThunkCreator(user) {
-  return async (dispatch) => {
-    try {
+
+export function toggleAdminThunkCreator(user) {
+  try {
+    return async (dispatch) => {
       const { data } = await axios.put(`/api/users/${user.id}`);
-      console.log("DATA >>>>", data);
       dispatch(_makeAdmin(data));
-    } catch (err) {
-      console.log("Error inside makeAdminThunkCreator: ", err);
-    }
-  };
+    };
+  } catch (err) {
+    console.log("Error inside makeAdminThunkCreator: ", err);
+  }
 }
 
 export default function (state = initialState, action) {
