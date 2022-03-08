@@ -19,6 +19,10 @@ class OrderEntryForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    console.log('PROPS INSIDE ORDER ENTRY FORM >>>>>>', this.props)
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -48,20 +52,20 @@ class OrderEntryForm extends React.Component {
         size: this.state.size,
         colorId: this.state.color,
         QTY: this.state.QTY,
-        productId: this.props.productId,
+        productId: this.props.productInfo.id,
         orderId: -1,
+        imgPath: this.props.productInfo.imgPath,
+        price: this.props.productInfo.price
       };
       if (!localStorage.guestOrder) {
         // localStorage.setItem("guestOrder", ['HELLOOOOO']);
         //const updateStorage = localStorage.getItem("guestOrder");
         const updateStorage = [];
       updateStorage.push(newlyPlacedGuestOrderEntry);
-      console.log('UPDATE STORAGE #1 >>>>>>>>>>', updateStorage);
       localStorage.setItem('guestOrder', JSON.stringify(updateStorage));
       } else {
         //push that object to local storage in an array of order Entries whose order id = -1
         const addToStorage = JSON.parse(localStorage.getItem('guestOrder'));
-        console.log("ADD TO STORAGE >>>>>", typeof addToStorage)
         addToStorage.push(newlyPlacedGuestOrderEntry);
         localStorage.setItem('guestOrder', JSON.stringify(addToStorage));
       }

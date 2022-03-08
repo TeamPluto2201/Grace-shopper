@@ -83,7 +83,66 @@ class CartItem extends React.Component {
 
     console.log("this.props.entryArray", this.props.entryArray)
 
-    return this.props.entryArray.map((entry) => {
+    let cartArray = this.props.entryArray
+
+    if(cartArray.length == 0) {
+      cartArray = JSON.parse(localStorage.getItem('guestOrder'))
+
+      return cartArray.map((entry) => {
+
+        return (
+          <div id='productCardAllView' key={cartArray.indexOf(entry)}>
+            <img id='shirtImgAll' src={entry.imgPath} />
+            <div id='designNameAll'>{entry.designName}</div>
+            <div>${(entry.price / 100).toFixed(2)}</div>
+            <div>number of items {entry.QTY}</div>
+            <div>size {entry.size}</div>
+            {/* <div>color {entry.colorId}</div> */}
+            <div>color {entry.colorId}</div>
+  
+            <div>Update Item</div>
+            <form value={entry.id} onSubmit={this.handleSubmit}>
+  
+              <div>
+                <label>Size</label>
+                <select name='size' onChange={this.handleChange}>
+  
+                  <option value={"S"}>S</option>
+                  <option value={"M"}>M</option>
+                  <option value={"L"}>L</option>
+  
+                </select>
+              </div>
+  
+              <div>
+                <label>Color</label>
+                <select name='color.name' onChange={this.handleChange}>
+                  <option value={"white"}>white</option>
+                  <option value={"black"}>black</option>
+                </select>
+              </div>
+  
+              <div>
+                <label>Qty</label>
+  
+                <input type='number' min='1' name='QTY' value={this.state.name} onChange={this.handleChange} />
+  
+              </div>
+              <div>
+                <button value={entry.id} type='submit' onClick={this.handleClickUpdateButton}>Update Item </button>
+              </div>
+  
+            </form>
+  
+            <button onClick={this.handleClick} value={entry.id} type='button'>Remove Item</button>
+          </div>
+        );
+      });
+    };
+
+    console.log("CART ARRAY >>>>>>", cartArray)
+
+    return cartArray.map((entry) => {
 
       return (
         <div id='productCardAllView' key={entry.id}>
