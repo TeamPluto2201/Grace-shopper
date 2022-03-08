@@ -3,8 +3,8 @@ const db = require("../db");
 
 const Product = db.define("product", {
   garmentType: {
-    type: Sequelize.ENUM('T - Shirt'),
-    defaultValue: "T - Shirt"
+    type: Sequelize.ENUM("T - Shirt"),
+    defaultValue: "T - Shirt",
   },
   designName: {
     type: Sequelize.STRING,
@@ -16,6 +16,7 @@ const Product = db.define("product", {
   },
   imgPath: {
     type: Sequelize.STRING,
+    defaultValue: "/Shirt-7.png ",
     allowNull: false,
   },
 });
