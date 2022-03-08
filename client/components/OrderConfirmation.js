@@ -1,14 +1,15 @@
 import React from "react";
 
 export class OrderConfirmation extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.sendHome = this.sendHome.bind(this);
   };
   
   sendHome() {
-      this.props.history.push('/')
+      console.log("MY PROPS >>>>", this.props)
+      this.props.history.push('/products');
   };
 
   render() {

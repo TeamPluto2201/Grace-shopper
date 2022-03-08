@@ -35,7 +35,7 @@ class AllOrderEntries extends React.Component {
     return (
       <div>
         {this.state.checkedOut === true ? (
-        <OrderConfirmation />
+        <OrderConfirmation props={this.props}/>
         ) : (
           <div id='allContainer'>
           <h1 id='pageHeader'>MY CART</h1>
