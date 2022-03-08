@@ -11,7 +11,8 @@ class CartItem extends React.Component {
       size: "",
       color: "",
       QTY: "",
-      id: ""
+      id: "",
+      currentCart: [],
       // designName: "",
       // imgPath: "",
       // price: "",
@@ -21,6 +22,7 @@ class CartItem extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClickUpdateButton = this.handleClickUpdateButton.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   handleClick(event) {
@@ -52,38 +54,15 @@ class CartItem extends React.Component {
     const targetIdx = event.target.value;
     currentCart.splice(targetIdx, 1);
     localStorage.setItem('guestOrder', JSON.stringify(currentCart));
+    this.setState({
+      ...this.state, currentCart: currentCart
+    });
   };
 
   async componentDidMount() {
     // await this.props.getOrderEntry(this.props.auth.id);
     console.log("HERE!!!!!!!!orderEntry mounted");
   }
-
-  // render() {
-  //   console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
-  //   console.log("this.props.entryArray", this.props.entryArray)
-
-  //   return this.props.entryArray.map((entry) => {
-
-  //     return (
-  //       <div id='productCardAllView' key={entry.id}>
-  //         <img id='shirtImgAll' src={entry.product.imgPath} />
-  //         <div id='designNameAll'>{entry.product.designName}</div>
-  //         <div>${(entry.product.price / 100).toFixed(2)}</div>
-  //         <div>number of items {entry.QTY}</div>
-  //         <div>size {entry.size}</div>
-  //         {/* <div>color {entry.colorId}</div> */}
-  //         <div>color {entry.color.name}</div>
-  //         <button value={entry.id} type='button'>Update Item</button>
-  //         <button onClick={this.handleClick} value={entry.id} type='button'>Remove Item</button>
-  //       </div>
-  //     );
-  //   });
-  // }
-
-
-  //////////////////////////////////////
-
 
   render() {
    
@@ -201,9 +180,6 @@ class CartItem extends React.Component {
       );
     });
   }
-
-
-
 }
 
 function mapStateToProps(state) {
@@ -211,14 +187,6 @@ function mapStateToProps(state) {
     isLoggedIn: state.isLoggedIn
   };
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     getOrderEntry: (id) => {
-//       dispatch(getOrderEntryThunkCreator(id));
-//     },
-//   };
-// }
 
 function mapDispatchToProps(dispatch) {
   return {
