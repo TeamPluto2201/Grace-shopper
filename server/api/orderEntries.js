@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const {
-  models: { OrderEntry, Order },
+  models: { OrderEntry, Order, User },
 } = require("../db");
+
 
 //all routes start at /api/orderEntries
 
@@ -10,43 +11,37 @@ const {
 router.post("/", async (req, res, next) => {
   try {
     // grab the current user Id and find their associated order that has not been purchased
+    const { id } = await User.findByToken(req.headers.authorization)
+    console.log('ID order entries post-->', id)
 
-    const currentUserId = req.body.userId;
-
-    let currentOrder = await Order.findAll({
+    let currentOrder = await Order.findOne({
       where: {
-        userId: currentUserId,
+        userId: id,
         purchased: false,
       },
     });
 
-    if (currentOrder.length === 0) {
-      const newOrder = { userId: currentUserId }
+    if (!currentOrder) {
+      const newOrder = { userId: id }
       await Order.create(newOrder)
     }
 
-    currentOrder = await Order.findAll({
+    const newlyPlacedOrder = {
+      size: req.body.size,
+      colorId: req.body.color,
+      QTY: req.body.QTY,
+      productId: req.body.productId,
+      orderId: currentOrder.id,
+    };
+
+    currentOrder = await Order.findOne({
       where: {
-        userId: currentUserId,
+        userId: id,
         purchased: false,
       },
     });
-    /* we need to add logic to check if there actually is an order. If not, create a new one
-         if (currentOrder.length = 0) {
-         Order.create({UserId})
-        }
-       we then need to requery the database to grab the Id of the order that was just created
-        */
-    // create a new object that includes the req.body
-    // key/value pairs, subtracts the userId key, and adds the ID from the current order
 
-    const newlyPlacedOrder = {
-      size: req.body.size,
-      color: req.body.color,
-      QTY: req.body.QTY,
-      productId: req.body.productId,
-      orderId: currentOrder[0].dataValues.id,
-    };
+  
     //use that object to create a new order entry
     const orderEntry = await OrderEntry.create(newlyPlacedOrder);
     res.send(orderEntry);

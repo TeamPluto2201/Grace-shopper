@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
-const { requireAuth } = require('../Middleware/authMiddleware')
 
 router.get('/', async (req, res, next) => {
   try {

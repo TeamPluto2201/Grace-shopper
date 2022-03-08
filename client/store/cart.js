@@ -79,14 +79,21 @@ export function getOrderEntriesThunkCreator() {
 }
 
 export function addOrderEntryThunkCreator(entryToCreate) {
-  try {
     return async (dispatch) => {
-      const { data } = await axios.post("/api/orderEntries", entryToCreate);
+      try {
+      const token = window.localStorage.getItem('token')
+      console.log('NEW ORDER inside Cart store -->', entryToCreate)
+      const { data } = await axios.post("/api/orderEntries", entryToCreate, {
+      headers: {
+        authorization: token
+    }
+  }
+      );
       dispatch(_addOrderEntry(data));
-    };
-  } catch (err) {
+    } catch (err) {
     console.log("Error inside addOrderEntryThunkCreator: ", err);
   }
+}
 }
 
 export function updateOrderEntryThunkCreator(entryToUpdate) {
@@ -125,12 +132,13 @@ export default function (state = initialState, action) {
     case ADD_ORDER_ENTRY:
       return [...state, action.orderEntry];
 
-    // below cases need to use .filter
+    // I believe that the UPDATE and DELETE cases should both return an object
+    // instead of an array, but I didn't know how to test/confirm so this may need to be changed.
     case UPDATE_ORDER_ENTRY:
-      return [ ...state, ...action.orderEntry ];
-    
+      return { ...state, ...action.orderEntry };
+
     case DELETE_ORDER_ENTRY:
-      return [ ...state, ...action.orderEntry ];
+      return { ...state, ...action.orderEntry };
 
     default:
       return state;

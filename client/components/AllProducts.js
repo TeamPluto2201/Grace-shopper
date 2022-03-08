@@ -19,14 +19,15 @@ class AllProducts extends React.Component {
 
     console.log("tshirt array", tshirtArray);
     return (
-      <div id='allContainer'>
-        <h1 id='pageHeader'>ALL PRODUCTS</h1>
-        <div id='wrapContainer'>
+      <div id="allContainer">
+        <h1 id="pageHeader">ALL PRODUCTS</h1>
+        <div id="wrapContainer">
           {tshirtArray.map((tShirt) => {
             return (
-              <div id='productCardAllView' key={tShirt.id}>
-                <img id='shirtImgAll' src={tShirt.imgPath} />
-                <div id='designNameAll'>{tShirt.designName}</div>
+              <div>
+                <div id="productCardAllView" key={tShirt.id}></div>
+                <img id="shirtImgAll" src={tShirt.imgPath} />
+                <Link id="designNameAll" to={`/products/${tShirt.id}`}>{tShirt.designName}</Link>
                 <div>${(tShirt.price / 100).toFixed(2)}</div>
               </div>
             );

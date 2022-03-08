@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getOrderEntriesThunkCreator, addOrderEntryThunkCreator } from "../store/cart";
-
+import Colors from './Colors' 
 
 
 class OrderEntryForm extends React.Component {
@@ -9,7 +9,7 @@ class OrderEntryForm extends React.Component {
         super(props)
         this.state = {
             size: "S",
-            color: "white",
+            color: "1",
             QTY: "1"
         }
 
@@ -21,12 +21,14 @@ class OrderEntryForm extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+        console.log('STATE HANDLE CHANGE order entry form  -->', this.state)
+        console.log('EVENT.TARGET.VALUE', event.target.value)
     }
 
     handleSubmit(event) {
+        console.log('STATE HANDLE SUBMIT order entry form', this.state)
         event.preventDefault();
         const entryObject = { ...this.state, userId: this.props.auth.id, productId: this.props.productId }
-        console.log("ENTRYOBJECT********************", entryObject)
         this.props.addToCart(entryObject)
 
         //needs to call thunk that creates orderEntry 
@@ -36,10 +38,9 @@ class OrderEntryForm extends React.Component {
     }
 
     render() {
-        console.log("THIS.PROPS.AUTH....................", this.props.auth);
+        console.log('THIS>STATE', this.state)
         return (
             <>
-                <h3>Order Entry Form</h3>
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>Size</label>
@@ -51,13 +52,13 @@ class OrderEntryForm extends React.Component {
 
                         </select>
                     </div>
-
                     <div>
-                        <label>Color</label>
+                        {/* <label>Color</label>
                         <select name='color' onChange={this.handleChange}>
                             <option value={"white"}>white</option>
                             <option value={"black"}>black</option>
-                        </select>
+                        </select> */}
+                        <Colors handleChange={this.handleChange.bind(this)}/>
                     </div>
 
                     <div>
