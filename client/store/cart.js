@@ -1,5 +1,6 @@
 import axios from "axios";
 import history from "../history";
+import store from "./index.js";
 
 const initialState = [];
 //should be an array of orderEntries
@@ -81,33 +82,39 @@ export function addOrderEntryThunkCreator(entryToCreate) {
     } catch (err) {
     console.log("Error inside addOrderEntryThunkCreator: ", err);
   }
+
 }
 }
 
 export function updateOrderEntryThunkCreator(entryToUpdate) {
-  try {
-    return async (dispatch) => {
+
+  return async (dispatch) => {
+    try {
       const { data } = await axios.put(
         `/api/orderEntries/${entryToUpdate.id}`,
         entryToUpdate
       );
       dispatch(_updateOrderEntry(data));
+    }
+    catch (err) {
+      console.log("Error inside updateOrderEntryThunkCreator", err);
     };
-  } catch (err) {
-    console.log("Error inside updateOrderEntryThunkCreator", err);
   }
 }
 
 export function deleteOrderEntryThunkCreator(entryToDelete) {
-    return async (dispatch) => {
-      try{
-        const { data } = await axios.delete(
-          `/api/orderEntries/${entryToDelete.id}`
-        );
-        dispatch(_deleteOrderEntry(data));
-  } catch (err) {
-    console.log("Error inside deleteOrderEntryThunkCreator", err);
-  }
+
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/orderEntries/${entryToDelete}`
+      );
+      dispatch(_deleteOrderEntry(data));
+    }
+    catch (err) {
+      console.log("Error inside deleteOrderEntryThunkCreator", err);
+    }
+  };
 }
 }
 
