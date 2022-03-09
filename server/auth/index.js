@@ -28,7 +28,6 @@ router.get('/me', async (req, res, next) => {
   try {
   
     const currentUser = await User.findByToken(req.headers.authorization)
-    console.log('CURRENT USER -->',currentUser)
     res.send(currentUser)
   } catch (ex) {
     next(ex)

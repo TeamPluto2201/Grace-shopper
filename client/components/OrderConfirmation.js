@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 
 export class OrderConfirmation extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export class OrderConfirmation extends React.Component {
     return (
       <div>
         <div>Your order is complete!</div>
-        <button onClick={this.sendHome}>Keep shopping</button>
+        <Link to='/'  >Keep Shopping?</Link>
       </div>
     );
   };

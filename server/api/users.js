@@ -23,10 +23,7 @@ router.get('/', async (req, res, next) => {
       } else {
         res.status(401).send('Not authenticated')
       }
-    } else {
-      res.redirect('/')
-    }
-  } catch (err) {
+    } catch (err) {
     next(err)
   }
 });

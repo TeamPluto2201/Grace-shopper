@@ -9,7 +9,12 @@ class AllProducts extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getAllProducts();
+    try {
+      await this.props.getAllProducts();
+    } catch (err) {
+      console.log('Error while retrieving All Products', err)
+    }
+
   }
 
   render() {

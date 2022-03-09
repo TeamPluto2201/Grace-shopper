@@ -16,7 +16,12 @@ class AddProductForm extends React.Component {
       designName: event.target.designName.value,
       price: event.target.price.value,
     };
-    this.props.createProduct(newProduct);
+    try{
+      this.props.createProduct(newProduct);
+    } catch (err) {
+      console.log('Error while creating product', err)
+    }
+
   }
 
   render() {

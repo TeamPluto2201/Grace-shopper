@@ -10,16 +10,14 @@ class SingleProduct extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("props in CDM", this.props);
-    await this.props.getOneProduct(this.props.match.params.id);
+    try {
+      await this.props.getOneProduct(this.props.match.params.id);
+    } catch (err) {
+      console.log('Error while retrieving Single Product', err)
+    }
   }
 
   render() {
-    console.log("props--->", this.props);
-    console.log(
-      "This.props.id************************************",
-      this.props.id
-    );
     return (
       <div>
         <div>
