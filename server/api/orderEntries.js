@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { OrderEntry, Order, User },
+  models: { OrderEntry, Order, User, Product, Color },
 } = require("../db");
 
 //all routes start at /api/orderEntries
@@ -11,26 +11,8 @@ router.post("/", async (req, res, next) => {
   try {
     const { id } = await User.findByToken(req.headers.authorization);
     // grab the current user Id and find their associated order that has not been purchased
-
+    const { id } = await User.findByToken(req.headers.authorization);
     console.log("ID order entries post-->", id);
-    // if (!id) {
-    //   //check if local storage has order object
-    //   if (!localStorage.guestOrder) {
-    //     localStorage.setItem("guestOrder", []);
-    //   }
-    //   //create object of orderEntry,
-    //   const newlyPlacedGuestOrderEntry = {
-    //     size: req.body.size,
-    //     colorId: req.body.color,
-    //     QTY: req.body.QTY,
-    //     productId: req.body.productId,
-    //     orderId: -1,
-    //   };
-
-    //   //push that object to local storage in an array of order Entries whose order id = -1
-    //   localStorage.guestOrder.push(newlyPlacedGuestOrderEntry);
-    //   res.send(newlyPlacedGuestOrderEntry);
-    // }
 
     let currentOrder = await Order.findOne({
       where: {
@@ -68,23 +50,62 @@ router.post("/", async (req, res, next) => {
 
 //to delete an existing orderEntry
 router.delete("/:id", async (req, res, next) => {
-  try {
-    const orderEntry = await OrderEntry.findByPk(req.params.id);
-    await orderEntry.destroy();
-    res.send(orderEntry);
-  } catch (err) {
-    next(err);
+  if (req.headers.authorization) {
+    try {
+      const token = req.headers.authorization;
+      const { id } = await User.findByToken(token);
+      const orderEntry = await OrderEntry.findByPk(req.params.id, {
+        include: [
+          { model: Product },
+          { model: Color },
+          {
+            model: Order,
+            where: {
+              userId: id,
+            },
+          },
+        ],
+      });
+      await orderEntry.destroy();
+      res.send(orderEntry);
+    } catch (err) {
+      next(err);
+    }
+  } else {
+    res.sendStatus(401);
   }
 });
 
 //to make updates to an existng orderEntry
 router.put("/:id", async (req, res, next) => {
-  try {
-    const orderEntry = await OrderEntry.findByPk(req.params.id);
-    const updatedOrderEntry = await OrderEntry.update(req.body);
-    res.send(updatedOrderEntry);
-  } catch (err) {
-    next(err);
+  console.log(req.headers.authorization);
+  if (req.headers.authorization) {
+    try {
+      const token = req.headers.authorization;
+      const { id } = await User.findByToken(token);
+
+      const orderEntry = await OrderEntry.findByPk(req.params.id, {
+        include: [
+          { model: Product },
+          { model: Color },
+          {
+            model: Order,
+            where: {
+              userId: id,
+            },
+          },
+        ],
+      });
+
+      const updatedOrderEntry = await orderEntry.update(req.body);
+      console.log(updatedOrderEntry.toJSON());
+      // console.log('updatedOrderEntry -->', updatedOrderEntry)
+      res.send(updatedOrderEntry);
+    } catch (err) {
+      next(err);
+    }
+  } else {
+    res.sendStatus(401);
   }
 });
 

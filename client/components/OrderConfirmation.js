@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
+
 
 export class OrderConfirmation extends React.Component {
   constructor(props) {
@@ -10,7 +12,7 @@ export class OrderConfirmation extends React.Component {
     return (
       <div>
         <div>Your order is complete!</div>
-        <Link to='/'>Keep shopping</Link>
+        <Link to='/'  >Keep Shopping?</Link>
       </div>
     );
   }

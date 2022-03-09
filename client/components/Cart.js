@@ -17,31 +17,45 @@ class AllOrderEntries extends React.Component {
   };
 
   async componentDidMount() {
-    await this.props.getAllOrderEntries();
+    try {
+      await this.props.getAllOrderEntries();
+    } catch (err) {
+      console.log('Error while getting All Order Entries', err)
+    }
   }
 
   completeCheckout() {
-    console.log('completeCheckout initiated...');
+  
     this.setState({
       checkedOut: true,
     });
   };
 
   render() {
-    console.log("PROPS IN CART COMPONENT--->", this.props);
+
     const entryArray = this.props.orderEntries || [];
+    const orderEntries = entryArray;
+    let sumTotal = 0;
+    for (let i = 0; i < orderEntries.length; i++) {
+      let price = orderEntries[i].product.price;
+      let quantity = orderEntries[i].QTY;
+      sumTotal += (quantity * price)
+    }
 
     console.log("entry array", entryArray);
     return (
       <div>
+        <div>
+        <div>${(sumTotal / 100).toFixed(2)}</div>
+        <CartCheckoutPrompt completeCheckout={this.completeCheckout.bind(this)}/>
+        </div>
         {this.state.checkedOut === true ? (
         <OrderConfirmation props={this.props}/>
         ) : (
           <div id='allContainer'>
           <h1 id='pageHeader'>MY CART</h1>
         <div id='wrapContainer'>
-          <CartItems entryArray={entryArray} />
-          <CartCheckoutPrompt completeCheckout={this.completeCheckout.bind(this)}/>
+          <CartItems history={this.props.history} entryArray={entryArray} />
         </div>
         </div>
         ) }

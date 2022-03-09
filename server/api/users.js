@@ -18,11 +18,8 @@ router.get("/", async (req, res, next) => {
       } else {
         res.status(401).send("Not authenticated");
       }
-    } else {
-      res.status(401).send("Not authenticated");
-    }
-  } catch (err) {
-    next(err);
+    } catch (err) {
+    next(err)
   }
 });
 

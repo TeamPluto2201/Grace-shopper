@@ -62,7 +62,6 @@ export function getOrderEntriesThunkCreator() {
       }
     }
   };
-
   // Right now this only works for logged in users, so we need to discuss
   // how to handle guests.
 }
@@ -88,10 +87,15 @@ export function addOrderEntryThunkCreator(entryToCreate) {
 export function updateOrderEntryThunkCreator(entryToUpdate) {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem('token')
       const { data } = await axios.put(
         `/api/orderEntries/${entryToUpdate.id}`,
-        entryToUpdate
+        entryToUpdate, {headers: {
+          authorization: token
+        }
+      }
       );
+      console.log('',data)
       dispatch(_updateOrderEntry(data));
     } catch (err) {
       console.log("Error inside updateOrderEntryThunkCreator", err);
@@ -102,13 +106,21 @@ export function updateOrderEntryThunkCreator(entryToUpdate) {
 export function deleteOrderEntryThunkCreator(entryToDelete) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/orderEntries/${entryToDelete}`);
+      const token = window.localStorage.getItem('token')
+      const { data } = await axios.delete(
+        `/api/orderEntries/${entryToDelete}`, {
+          headers: {
+            authorization: token
+          }
+        }
+      );
       dispatch(_deleteOrderEntry(data));
     } catch (err) {
       console.log("Error inside deleteOrderEntryThunkCreator", err);
     }
   };
 }
+
 
 export default function (state = initialState, action) {
   switch (action.type) {

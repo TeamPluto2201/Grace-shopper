@@ -33,18 +33,13 @@ class OrderEntryForm extends React.Component {
 
   handleSubmit(event) {
     if (this.props.isLoggedIn) {
-      console.log("STATE HANDLE SUBMIT order entry form", this.state);
-      event.preventDefault();
-      const entryObject = {
-        ...this.state,
-        userId: this.props.auth.id,
-        productId: this.props.productId,
-      };
-      this.props.addToCart(entryObject);
-      //needs to call thunk that creates orderEntry
-      //take our local state add the product id that gets passed in to props.
-      //needs to be able to add to a cart regardless of whether someone is logged in or not.
-      //call a thunk that creates a new orderEntry item
+       event.preventDefault();
+        const entryObject = { ...this.state, userId: this.props.auth.id, productId: this.props.productId }
+        try {
+            this.props.addToCart(entryObject)
+        } catch (err) {
+            console.log('Error while creating New Order Entry', err)
+        }
     } else {
       event.preventDefault();
       //create object of orderEntry,
