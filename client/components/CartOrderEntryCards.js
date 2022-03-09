@@ -194,8 +194,7 @@ class CartItem extends React.Component {
           </div>
         );
       });
-    }
-    if (this.props.isLoggedIn === true) {
+    } else {
       return entryArray.map((entry) => {
         return (
           <div id='productCardAllView' key={entry.id}>
@@ -260,7 +259,7 @@ class CartItem extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.isLoggedIn,
+    isLoggedIn: !!state.auth.id,
   };
 }
 
