@@ -250,3 +250,22 @@ button:hover {
 #checkoutLink:hover {
   transform: scale(1.1);
 }
+#checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: cyan;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+  font-size: 25px;
+}
+#checkout button {
+  transition: all 1s ease;
+  font-size: 30px;
+  width: 200px;
+  height: 50px;
+}
+#checkout button:hover {
+  background-color: #8f8f8f;
+}
