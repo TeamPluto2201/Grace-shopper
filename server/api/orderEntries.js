@@ -9,6 +9,7 @@ const {
 
 router.post("/", async (req, res, next) => {
   try {
+    const { id } = await User.findByToken(req.headers.authorization);
     // grab the current user Id and find their associated order that has not been purchased
     const { id } = await User.findByToken(req.headers.authorization);
     console.log("ID order entries post-->", id);
@@ -30,7 +31,7 @@ router.post("/", async (req, res, next) => {
       currentOrNewOrderId = currentOrder.id;
     }
 
-    const newlyPlacedOrder = {
+    const newlyPlacedOrderEntry = {
       size: req.body.size,
       colorId: req.body.color,
       QTY: req.body.QTY,
@@ -39,7 +40,7 @@ router.post("/", async (req, res, next) => {
     };
 
     //use that object to create a new order entry
-    const orderEntry = await OrderEntry.create(newlyPlacedOrder);
+    const orderEntry = await OrderEntry.create(newlyPlacedOrderEntry);
     console.log("ORDER ENTRY NEWLY CREATED -->", orderEntry);
     res.send(orderEntry);
   } catch (err) {

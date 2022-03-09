@@ -53,40 +53,38 @@ export function getOrderEntriesThunkCreator() {
     const token = window.localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.get(`/api/cart`, { headers: { authorization: token } });
+        const response = await axios.get(`/api/cart`, {
+          headers: { authorization: token },
+        });
         dispatch(_getOrderEntries(response.data));
-      }
-      catch (err) {
+      } catch (err) {
         console.log("Error inside getOrderEntriesThunkCreator: ", err);
       }
     }
-  }
+  };
   // Right now this only works for logged in users, so we need to discuss
   // how to handle guests.
 }
 
 export function addOrderEntryThunkCreator(entryToCreate) {
-    return async (dispatch) => {
-      try {
-      const token = window.localStorage.getItem('token')
-      console.log('NEW ORDER inside Cart store -->', entryToCreate)
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      console.log("NEW ORDER inside Cart store -->", entryToCreate);
       const { data } = await axios.post("/api/orderEntries", entryToCreate, {
-      headers: {
-        authorization: token
-    }
-  }
-      );
-      console.log('DATA response from axios post',data)
+        headers: {
+          authorization: token,
+        },
+      });
+      console.log("DATA response from axios post", data);
       dispatch(_addOrderEntry(data));
     } catch (err) {
-    console.log("Error inside addOrderEntryThunkCreator: ", err);
-  }
-
-}
+      console.log("Error inside addOrderEntryThunkCreator: ", err);
+    }
+  };
 }
 
 export function updateOrderEntryThunkCreator(entryToUpdate) {
-
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem('token')
@@ -99,15 +97,13 @@ export function updateOrderEntryThunkCreator(entryToUpdate) {
       );
       console.log('',data)
       dispatch(_updateOrderEntry(data));
-    }
-    catch (err) {
+    } catch (err) {
       console.log("Error inside updateOrderEntryThunkCreator", err);
-    };
-  }
+    }
+  };
 }
 
 export function deleteOrderEntryThunkCreator(entryToDelete) {
-
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem('token')
@@ -119,8 +115,7 @@ export function deleteOrderEntryThunkCreator(entryToDelete) {
         }
       );
       dispatch(_deleteOrderEntry(data));
-    }
-    catch (err) {
+    } catch (err) {
       console.log("Error inside deleteOrderEntryThunkCreator", err);
     }
   };
@@ -140,11 +135,18 @@ export default function (state = initialState, action) {
     case UPDATE_ORDER_ENTRY:
       // return [...state, ...action.orderEntry];
       // return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id }).concat(action.orderEntry)
-      return [...(state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })), action.orderEntry]
+      return [
+        ...state.filter((orderEntry) => {
+          return orderEntry.id !== action.orderEntry.id;
+        }),
+        action.orderEntry,
+      ];
 
     case DELETE_ORDER_ENTRY:
       // return [...state, ...action.orderEntry];
-      return state.filter(orderEntry => { return orderEntry.id !== action.orderEntry.id })
+      return state.filter((orderEntry) => {
+        return orderEntry.id !== action.orderEntry.id;
+      });
 
     default:
       return state;
