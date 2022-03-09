@@ -7,13 +7,15 @@ import allProductsReducer from "./allProducts";
 import oneProductReducer from "./SingleProduct";
 import allUsersReducer from "./adminDash";
 import cartReducer from "./cart.js";
+import cartTotalReducer from './cartTotal'
 
 const reducer = combineReducers({
   auth,
   products: allProductsReducer,
   product: oneProductReducer,
   users: allUsersReducer, 
-  cart: cartReducer
+  cart: cartReducer,
+  cartTotal: cartTotalReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

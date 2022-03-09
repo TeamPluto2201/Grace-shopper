@@ -5,12 +5,11 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div id='navBar'>
-    <img id='logo' src='/headerGraphic-01.png' />
-
+    <Link to='/'  > <img id='logo' src='/headerGraphic-01.png' />  </Link>
     <nav>
       {isLoggedIn ? (
         <div>
-          <img id='cartIcon' src='/cartIcon-01.png' />
+          <Link to='/cart'  > <img id='cartIcon' src='/cartIcon-01.png' />  </Link>
           {/* The navbar will show these links after you log in */}
           <Link className='navLinks' to='/products'>
             Home

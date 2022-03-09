@@ -9,8 +9,8 @@ class OrderEntryForm extends React.Component {
         super(props)
         this.state = {
             size: "S",
-            color: "1",
-            QTY: "1"
+            colorId: 1,
+            QTY: 1
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,20 +21,16 @@ class OrderEntryForm extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         })
-        console.log('STATE HANDLE CHANGE order entry form  -->', this.state)
-        console.log('EVENT.TARGET.VALUE', event.target.value)
     }
 
     handleSubmit(event) {
-        console.log('STATE HANDLE SUBMIT order entry form', this.state)
         event.preventDefault();
         const entryObject = { ...this.state, userId: this.props.auth.id, productId: this.props.productId }
-        this.props.addToCart(entryObject)
-
-        //needs to call thunk that creates orderEntry 
-        //take our local state add the product id that gets passed in to props. 
-        //needs to be able to add to a cart regardless of whether someone is logged in or not. 
-        //call a thunk that creates a new orderEntry item
+        try {
+            this.props.addToCart(entryObject)
+        } catch (err) {
+            console.log('Error while creating New Order Entry', err)
+        }
     }
 
     render() {
