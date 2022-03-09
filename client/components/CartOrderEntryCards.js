@@ -105,10 +105,10 @@ class CartItem extends React.Component {
     }
     console.log("ENTRYYYYYY", entryToEdit);
 
-    if (this.state.color !== "") {
-      entryToEdit.color.name = this.state.color.name;
+    if (this.state.colorId !== "") {
+      entryToEdit.colorId = this.state.colorId;
 
-      this.setState({ ...this.state, color: "" });
+      this.setState({ ...this.state, colorId: "" });
     }
     currentCart[targetIdx] = entryToEdit;
 
@@ -123,25 +123,12 @@ class CartItem extends React.Component {
   }
 
   render() {
-    console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
-
-    console.log("this.props.entryArray", this.props.entryArray);
-
-    let cartArray = this.props.entryArray;
-
-    console.log("THIS.STATE inside CART ORDER ENTRY -->", this.state);
-    const orderEntries = this.props.entryArray;
-    let sumTotal;
-    for (let i = 0; i < orderEntries.length; i++) {
-      let price = orderEntries[i].product.price;
-      let quantity = orderEntries[i].QTY;
-      sumTotal += quantity * price;
-    }
     let entryArray = this.props.entryArray || [];
     console.log("ENTRY ARRAY --> ", entryArray);
 
     if (!this.props.isLoggedIn) {
-      cartArray = JSON.parse(localStorage.getItem("guestOrder"));
+      let cartArray = JSON.parse(localStorage.getItem("guestOrder"));
+      console.log("CART ARRAY >>>>>", cartArray)
 
       return cartArray.map((entry) => {
         let selectedColor;
@@ -207,7 +194,8 @@ class CartItem extends React.Component {
           </div>
         );
       });
-    } else {
+    } 
+    if (this.props.isLoggedIn === true) {
       return entryArray.map((entry) => {
         return (
           <div id="productCardAllView" key={entry.id}>
