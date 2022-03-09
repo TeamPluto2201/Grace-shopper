@@ -23,6 +23,7 @@ class CartItem extends React.Component {
     this.handleClickUpdateButton = this.handleClickUpdateButton.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   handleClick(event) {
@@ -44,6 +45,7 @@ class CartItem extends React.Component {
     console.log("This is the state that will be passed into update", this.state)
     this.props.updateOrderEntry(this.state);
   }
+
   handleClickUpdateButton(event) {
     this.setState({ id: event.target.value })
   }
@@ -57,6 +59,25 @@ class CartItem extends React.Component {
     this.setState({
       ...this.state, currentCart: currentCart
     });
+  };
+
+  handleEdit(event) {
+    event.preventDefault();
+    this.setState({ id: event.target.value })
+    const currentCart = JSON.parse(localStorage.getItem('guestOrder'));
+    const targetIdx = event.target.value;
+    const entryToEdit = {...this.state, ...currentCart[targetIdx]}
+    console.log('targetIdx >>>', targetIdx)
+    console.log('entryToEdit >>>>', entryToEdit)
+
+    // localStorage.setItem('guestOrder', JSON.stringify(currentCart));
+    console.log('this.state before', this.state)
+
+    this.setState({
+      ...this.state, entryToEdit
+    });
+
+    console.log('this.state after', this.state)
   };
 
   async componentDidMount() {
@@ -88,7 +109,7 @@ class CartItem extends React.Component {
             <div>color {entry.colorId}</div>
   
             <div>Update Item</div>
-            <form value={entry.id} onSubmit={this.handleSubmit}>
+            <form value={cartArray.indexOf(entry)} onSubmit={this.handleEdit}>
   
               <div>
                 <label>Size</label>
@@ -116,7 +137,7 @@ class CartItem extends React.Component {
   
               </div>
               <div>
-                <button value={entry.id} type='submit' onClick={this.handleClickUpdateButton}>Update Item </button>
+                <button value={cartArray.indexOf(entry)} type='submit' onClick={this.handleEdit}>Update Item </button>
               </div>
   
             </form>
