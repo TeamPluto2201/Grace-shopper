@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getOrderEntryThunkCreator, deleteOrderEntryThunkCreator, updateOrderEntryThunkCreator } from "../store/cart";
+import {
+  getOrderEntryThunkCreator,
+  deleteOrderEntryThunkCreator,
+  updateOrderEntryThunkCreator,
+} from "../store/cart";
 
-// export default 
+// export default
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
@@ -20,21 +24,21 @@ class CartItem extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClickUpdateButton = this.handleClickUpdateButton.bind(this)
+    this.handleClickUpdateButton = this.handleClickUpdateButton.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
   }
 
   handleClick(event) {
-    console.log("THIS IS THE CLICK ON THE BUTTON*******", event.target)
-    this.props.deleteOrderEntry(event.target.value)
+    console.log("THIS IS THE CLICK ON THE BUTTON*******", event.target);
+    this.props.deleteOrderEntry(event.target.value);
   }
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [event.target.name]: event.target.value,
+    });
   }
 
   handleSubmit(event) {
@@ -42,43 +46,56 @@ class CartItem extends React.Component {
     // console.log("this is event on the form ", event.target.value)
 
     // const changes = {...this.state, event.}
-    console.log("This is the state that will be passed into update", this.state)
+    console.log(
+      "This is the state that will be passed into update",
+      this.state
+    );
     this.props.updateOrderEntry(this.state);
   }
 
   handleClickUpdateButton(event) {
-    this.setState({ id: event.target.value })
+    this.setState({ id: event.target.value });
   }
 
   handleRemove(event) {
     event.preventDefault();
-    const currentCart = JSON.parse(localStorage.getItem('guestOrder'));
+    const currentCart = JSON.parse(localStorage.getItem("guestOrder"));
     const targetIdx = event.target.value;
     currentCart.splice(targetIdx, 1);
-    localStorage.setItem('guestOrder', JSON.stringify(currentCart));
+    localStorage.setItem("guestOrder", JSON.stringify(currentCart));
     this.setState({
-      ...this.state, currentCart: currentCart
+      ...this.state,
+      currentCart: currentCart,
     });
-  };
+  }
 
   handleEdit(event) {
     event.preventDefault();
-    this.setState({ id: event.target.value })
-    const currentCart = JSON.parse(localStorage.getItem('guestOrder'));
+    this.setState({ id: event.target.value });
+    const currentCart = JSON.parse(localStorage.getItem("guestOrder"));
     const targetIdx = event.target.value;
-    const entryToEdit = {...this.state, ...currentCart[targetIdx]}
-    console.log('targetIdx >>>', targetIdx)
-    console.log('entryToEdit >>>>', entryToEdit)
+    const entryToEdit = currentCart[targetIdx];
+    if (this.state.size !== "") {
+      entryToEdit.size = this.state.size;
+      this.setState({ ...this.state, size: "" });
+    }
+    if (this.state.QTY !== "") {
+      entryToEdit.QTY = this.state.QTY;
+      this.setState({ ...this.state, QTY: "" });
+    }
+    console.log("ENTRYYYYYY", entryToEdit);
 
-    // localStorage.setItem('guestOrder', JSON.stringify(currentCart));
-    console.log('this.state before', this.state)
+    if (this.state.color !== "") {
+      entryToEdit.color.name = this.state.color.name;
 
-    this.setState({
-      ...this.state, entryToEdit
-    });
+      this.setState({ ...this.state, color: "" });
+    }
+    currentCart[targetIdx] = entryToEdit;
 
-    console.log('this.state after', this.state)
-  };
+    localStorage.setItem("guestOrder", JSON.stringify(currentCart));
+    this.setState({ ...this.state, currentCart });
+    console.log("this.state after", this.state);
+  }
 
   async componentDidMount() {
     // await this.props.getOrderEntry(this.props.auth.id);
@@ -86,18 +103,18 @@ class CartItem extends React.Component {
   }
 
   render() {
-   
     console.log("PROPS INSIDE CART ORDER ENTRY CARD--->", this.props);
 
-    console.log("this.props.entryArray", this.props.entryArray)
+    console.log("this.props.entryArray", this.props.entryArray);
 
-    let cartArray = this.props.entryArray
+    let cartArray = this.props.entryArray;
 
-    if(!this.props.isLoggedIn) {
-      cartArray = JSON.parse(localStorage.getItem('guestOrder'))
+    if (!this.props.isLoggedIn) {
+      cartArray = JSON.parse(localStorage.getItem("guestOrder"));
 
       return cartArray.map((entry) => {
-
+        let selectedColor;
+        selectedColor = entry.colorId === 1 ? "white" : "black";
         return (
           <div id='productCardAllView' key={cartArray.indexOf(entry)}>
             <img id='shirtImgAll' src={entry.imgPath} />
@@ -106,22 +123,19 @@ class CartItem extends React.Component {
             <div>number of items {entry.QTY}</div>
             <div>size {entry.size}</div>
             {/* <div>color {entry.colorId}</div> */}
-            <div>color {entry.colorId}</div>
-  
+            <div>color {selectedColor}</div>
+
             <div>Update Item</div>
             <form value={cartArray.indexOf(entry)} onSubmit={this.handleEdit}>
-  
               <div>
                 <label>Size</label>
                 <select name='size' onChange={this.handleChange}>
-  
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>
-  
                 </select>
               </div>
-  
+
               <div>
                 <label>Color</label>
                 <select name='color.name' onChange={this.handleChange}>
@@ -129,29 +143,44 @@ class CartItem extends React.Component {
                   <option value={"black"}>black</option>
                 </select>
               </div>
-  
+
               <div>
                 <label>Qty</label>
-  
-                <input type='number' min='1' name='QTY' value={this.state.name} onChange={this.handleChange} />
-  
+
+                <input
+                  type='number'
+                  min='1'
+                  name='QTY'
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
               </div>
               <div>
-                <button value={cartArray.indexOf(entry)} type='submit' onClick={this.handleEdit}>Update Item </button>
+                <button
+                  value={cartArray.indexOf(entry)}
+                  type='submit'
+                  onClick={this.handleEdit}
+                >
+                  Update Item{" "}
+                </button>
               </div>
-  
             </form>
-  
-            <button onClick={this.handleRemove} value={cartArray.indexOf(entry)} type='button'>Remove Item</button>
+
+            <button
+              onClick={this.handleRemove}
+              value={cartArray.indexOf(entry)}
+              type='button'
+            >
+              Remove Item
+            </button>
           </div>
         );
       });
-    };
+    }
 
-    console.log("CART ARRAY >>>>>>", cartArray)
+    console.log("CART ARRAY >>>>>>", cartArray);
 
     return cartArray.map((entry) => {
-
       return (
         <div id='productCardAllView' key={entry.id}>
           <img id='shirtImgAll' src={entry.product.imgPath} />
@@ -164,15 +193,12 @@ class CartItem extends React.Component {
 
           <div>Update Item</div>
           <form value={entry.id} onSubmit={this.handleSubmit}>
-
             <div>
               <label>Size</label>
               <select name='size' onChange={this.handleChange}>
-
                 <option value={"S"}>S</option>
                 <option value={"M"}>M</option>
                 <option value={"L"}>L</option>
-
               </select>
             </div>
 
@@ -187,16 +213,28 @@ class CartItem extends React.Component {
             <div>
               <label>Qty</label>
 
-              <input type='number' min='1' name='QTY' value={this.state.name} onChange={this.handleChange} />
-
+              <input
+                type='number'
+                min='1'
+                name='QTY'
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
             </div>
             <div>
-              <button value={entry.id} type='submit' onClick={this.handleClickUpdateButton}>Update Item </button>
+              <button
+                value={entry.id}
+                type='submit'
+                onClick={this.handleClickUpdateButton}
+              >
+                Update Item{" "}
+              </button>
             </div>
-
           </form>
 
-          <button onClick={this.handleClick} value={entry.id} type='button'>Remove Item</button>
+          <button onClick={this.handleClick} value={entry.id} type='button'>
+            Remove Item
+          </button>
         </div>
       );
     });
@@ -205,7 +243,7 @@ class CartItem extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.isLoggedIn,
   };
 }
 
@@ -216,10 +254,9 @@ function mapDispatchToProps(dispatch) {
     },
 
     updateOrderEntry: (item) => {
-      dispatch(updateOrderEntryThunkCreator(item))
-    }
+      dispatch(updateOrderEntryThunkCreator(item));
+    },
   };
 }
 
-
-export default connect(null, mapDispatchToProps)(CartItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

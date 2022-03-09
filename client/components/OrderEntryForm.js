@@ -20,7 +20,7 @@ class OrderEntryForm extends React.Component {
   }
 
   componentDidMount() {
-    console.log('PROPS INSIDE ORDER ENTRY FORM >>>>>>', this.props)
+    console.log("PROPS INSIDE ORDER ENTRY FORM >>>>>>", this.props);
   }
 
   handleChange(event) {
@@ -51,23 +51,26 @@ class OrderEntryForm extends React.Component {
       const newlyPlacedGuestOrderEntry = {
         size: this.state.size,
         colorId: this.state.color,
+        color: {
+          name: "",
+        },
         QTY: this.state.QTY,
         productId: this.props.productInfo.id,
         orderId: -1,
         imgPath: this.props.productInfo.imgPath,
-        price: this.props.productInfo.price
+        price: this.props.productInfo.price,
       };
       if (!localStorage.guestOrder) {
         // localStorage.setItem("guestOrder", ['HELLOOOOO']);
         //const updateStorage = localStorage.getItem("guestOrder");
         const updateStorage = [];
-      updateStorage.push(newlyPlacedGuestOrderEntry);
-      localStorage.setItem('guestOrder', JSON.stringify(updateStorage));
+        updateStorage.push(newlyPlacedGuestOrderEntry);
+        localStorage.setItem("guestOrder", JSON.stringify(updateStorage));
       } else {
         //push that object to local storage in an array of order Entries whose order id = -1
-        const addToStorage = JSON.parse(localStorage.getItem('guestOrder'));
+        const addToStorage = JSON.parse(localStorage.getItem("guestOrder"));
         addToStorage.push(newlyPlacedGuestOrderEntry);
-        localStorage.setItem('guestOrder', JSON.stringify(addToStorage));
+        localStorage.setItem("guestOrder", JSON.stringify(addToStorage));
       }
     }
   }
