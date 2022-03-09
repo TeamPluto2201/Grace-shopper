@@ -7,21 +7,23 @@ const {
 // if we have a token, use that token to find information about the user from the database
 // if that user is an Administrator, give them access to information about all users
 router.get("/", async (req, res, next) => {
-  try {
     if (req.headers.authorization) {
-      const currentUser = await User.findByToken(req.headers.authorization);
-      if (currentUser.isAdmin) {
-        const users = await User.findAll({
-          attributes: ["id", "username", "isAdmin"],
-        });
-        res.json(users);
+      try {
+        const currentUser = await User.findByToken(req.headers.authorization);
+        if (currentUser.isAdmin) {
+          const users = await User.findAll({
+            attributes: ["id", "username", "isAdmin"],
+          });} 
+          res.json(users);
+        } catch(err) {
+            next(err)
+            console.log(err)
+          }
       } else {
         res.status(401).send("Not authenticated");
       }
-    } catch (err) {
-    next(err)
-  }
-});
+    })
+  
 
 router.put("/:id", async (req, res, next) => {
   try {

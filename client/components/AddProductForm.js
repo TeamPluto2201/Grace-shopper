@@ -21,7 +21,6 @@ class AddProductForm extends React.Component {
     } catch (err) {
       console.log('Error while creating product', err)
     }
-
   }
 
   render() {
