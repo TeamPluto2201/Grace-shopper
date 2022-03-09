@@ -128,15 +128,15 @@ class CartItem extends React.Component {
 
     if (!this.props.isLoggedIn) {
       let cartArray = JSON.parse(localStorage.getItem("guestOrder"));
-      console.log("CART ARRAY >>>>>", cartArray)
+      console.log("CART ARRAY >>>>>", cartArray);
 
       return cartArray.map((entry) => {
         let selectedColor;
         selectedColor = entry.colorId === 1 ? "white" : "black";
         return (
-          <div id="productCardAllView" key={cartArray.indexOf(entry)}>
-            <img id="shirtImgAll" src={entry.imgPath} />
-            <div id="designNameAll">{entry.designName}</div>
+          <div id='productCardAllView' key={cartArray.indexOf(entry)}>
+            <img id='shirtImgAll' src={entry.imgPath} />
+            <div id='designNameAll'>{entry.designName}</div>
             <div>${(entry.price / 100).toFixed(2)}</div>
             <div>number of items {entry.QTY}</div>
             <div>size {entry.size}</div>
@@ -147,7 +147,7 @@ class CartItem extends React.Component {
             <form value={cartArray.indexOf(entry)} onSubmit={this.handleEdit}>
               <div>
                 <label>Size</label>
-                <select name="size" onChange={this.handleChange}>
+                <select name='size' onChange={this.handleChange}>
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>
@@ -156,7 +156,7 @@ class CartItem extends React.Component {
 
               <div>
                 <label>Color</label>
-                <select name="color.name" onChange={this.handleChange}>
+                <select name='color.name' onChange={this.handleChange}>
                   <option value={"white"}>white</option>
                   <option value={"black"}>black</option>
                 </select>
@@ -166,9 +166,9 @@ class CartItem extends React.Component {
                 <label>Qty</label>
 
                 <input
-                  type="number"
-                  min="1"
-                  name="QTY"
+                  type='number'
+                  min='1'
+                  name='QTY'
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -176,7 +176,7 @@ class CartItem extends React.Component {
               <div>
                 <button
                   value={cartArray.indexOf(entry)}
-                  type="submit"
+                  type='submit'
                   onClick={this.handleEdit}
                 >
                   Update Item{" "}
@@ -187,20 +187,20 @@ class CartItem extends React.Component {
             <button
               onClick={this.handleRemove}
               value={cartArray.indexOf(entry)}
-              type="button"
+              type='button'
             >
               Remove Item
             </button>
           </div>
         );
       });
-    } 
+    }
     if (this.props.isLoggedIn === true) {
       return entryArray.map((entry) => {
         return (
-          <div id="productCardAllView" key={entry.id}>
-            <img id="shirtImgAll" src={entry.product.imgPath} />
-            <div id="designNameAll">{entry.product.designName}</div>
+          <div id='productCardAllView' key={entry.id}>
+            <img id='shirtImgAll' src={entry.product.imgPath} />
+            <div id='designNameAll'>{entry.product.designName}</div>
             <div>${(entry.product.price / 100).toFixed(2)}</div>
             <div>number of items {entry.QTY}</div>
             <div>size {entry.size}</div>
@@ -211,7 +211,7 @@ class CartItem extends React.Component {
             <form value={entry.id} onSubmit={this.handleSubmit}>
               <div>
                 <label>Size</label>
-                <select name="size" onChange={this.handleChange}>
+                <select name='size' onChange={this.handleChange}>
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>
@@ -220,7 +220,7 @@ class CartItem extends React.Component {
 
               <div>
                 <label>Color</label>
-                <select name="colorId" onChange={this.handleChange}>
+                <select name='colorId' onChange={this.handleChange}>
                   <option value={1}>white</option>
                   <option value={2}>black</option>
                 </select>
@@ -230,9 +230,9 @@ class CartItem extends React.Component {
                 <label>Qty</label>
 
                 <input
-                  type="number"
-                  min="1"
-                  name="QTY"
+                  type='number'
+                  min='1'
+                  name='QTY'
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -240,7 +240,7 @@ class CartItem extends React.Component {
               <div>
                 <button
                   value={entry.id}
-                  type="submit"
+                  type='submit'
                   onClick={this.handleClickUpdateButton}
                 >
                   Update Item
@@ -248,7 +248,7 @@ class CartItem extends React.Component {
               </div>
             </form>
 
-            <button onClick={this.handleClick} value={entry.id} type="button">
+            <button onClick={this.handleClick} value={entry.id} type='button'>
               Remove Item
             </button>
           </div>
