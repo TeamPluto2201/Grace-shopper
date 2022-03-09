@@ -5,11 +5,17 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div id='navBar'>
-    <Link to='/'  > <img id='logo' src='/headerGraphic-01.png' />  </Link>
+    <Link to='/'>
+      {" "}
+      <img id='logo' src='/headerGraphic-01.png' />{" "}
+    </Link>
     <nav>
       {isLoggedIn ? (
-        <div>
-          <Link to='/cart'  > <img id='cartIcon' src='/cartIcon-01.png' />  </Link>
+        <div id='navClickContainer'>
+          <Link to='/cart'>
+            {" "}
+            <img id='cartIcon' src='/cartIcon-01.png' />{" "}
+          </Link>
           {/* The navbar will show these links after you log in */}
           <Link className='navLinks' to='/products'>
             Home
@@ -19,9 +25,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           </a>
         </div>
       ) : (
-        <div>
+        <div id='navClickContainer'>
           {/* The navbar will show these links before you log in */}
-          <Link to='/cart'  > <img id='cartIcon' src='/cartIcon-01.png' />  </Link>
+          <Link to='/cart'>
+            {" "}
+            <img id='cartIcon' src='/cartIcon-01.png' />{" "}
+          </Link>
           <Link className='navLinks' to='/products'>
             Home
           </Link>
