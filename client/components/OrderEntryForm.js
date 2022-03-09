@@ -115,7 +115,7 @@ class OrderEntryForm extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    isLoggedIn: state.isLoggedIn,
+    isLoggedIn: !!state.auth.id,
   };
 }
 function mapDispatchToProps(dispatch) {

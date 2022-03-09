@@ -11,6 +11,7 @@ class AllOrderEntries extends React.Component {
     super();
     this.state = {
       checkedOut: false,
+
     };
 
     this.completeCheckout = this.completeCheckout.bind(this);
