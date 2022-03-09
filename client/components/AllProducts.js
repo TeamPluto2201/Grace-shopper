@@ -12,9 +12,8 @@ class AllProducts extends React.Component {
     try {
       await this.props.getAllProducts();
     } catch (err) {
-      console.log('Error while retrieving All Products', err)
+      console.log("Error while retrieving All Products", err);
     }
-
   }
 
   render() {
@@ -24,16 +23,21 @@ class AllProducts extends React.Component {
 
     console.log("tshirt array", tshirtArray);
     return (
-      <div id="allContainer">
-        <h1 id="pageHeader">ALL PRODUCTS</h1>
-        <div id="wrapContainer">
+      <div id='allContainer'>
+        <h1 id='pageHeader'>ALL PRODUCTS</h1>
+        <div id='wrapContainer'>
           {tshirtArray.map((tShirt) => {
             return (
-              <div key={tShirt.id}>
-                <div id="productCardAllView" ></div>
-                <img id="shirtImgAll" src={tShirt.imgPath} />
-                <Link id="designNameAll" to={`/products/${tShirt.id}`}>{tShirt.designName}</Link>
-                <div>${(tShirt.price / 100).toFixed(2)}</div>
+              <div className='cardLinks' key={tShirt.id}>
+                <Link to={`/products/${tShirt.id}`} id='productCardAllView'>
+                  <img id='shirtImgAll' src={tShirt.imgPath} />
+                  <div className='cardLinks' id='designNameAll'>
+                    {tShirt.designName}
+                  </div>
+                  <div className='cardLinks'>
+                    ${(tShirt.price / 100).toFixed(2)}
+                  </div>
+                </Link>
               </div>
             );
           })}
