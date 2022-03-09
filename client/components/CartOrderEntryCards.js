@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  getOrderEntryThunkCreator,
   deleteOrderEntryThunkCreator,
   updateOrderEntryThunkCreator,
 } from "../store/cart";
@@ -17,7 +16,7 @@ class CartItem extends React.Component {
       QTY: "",
       id: "",
       currentCart: [],
-      orderTotal: 0
+      orderTotal: 0,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -34,7 +33,7 @@ class CartItem extends React.Component {
     try {
       this.props.deleteOrderEntry(event.target.value);
     } catch (err) {
-      console.log('Error while Deleting Order Entry', err)
+      console.log("Error while Deleting Order Entry", err);
     }
   }
 
@@ -48,7 +47,7 @@ class CartItem extends React.Component {
     event.preventDefault();
 
     const currentState = this.state;
-    console.log('THIS . STATE inside handle submit ->',this.state)
+    console.log("THIS . STATE inside handle submit ->", this.state);
 
     let orderEntryUpdateObject;
     for (let keys in currentState) {
@@ -63,7 +62,7 @@ class CartItem extends React.Component {
       this.props.updateOrderEntry(orderEntryUpdateObject);
       // this.props.getOrderEntryThunkCreator();
     } catch (err) {
-      console.log('Error while updating order', err)
+      console.log("Error while updating order", err);
     }
   }
 
@@ -109,7 +108,6 @@ class CartItem extends React.Component {
     if (this.state.color !== "") {
       entryToEdit.color.name = this.state.color.name;
 
-
       this.setState({ ...this.state, color: "" });
     }
     currentCart[targetIdx] = entryToEdit;
@@ -130,8 +128,8 @@ class CartItem extends React.Component {
     console.log("this.props.entryArray", this.props.entryArray);
 
     let cartArray = this.props.entryArray;
-    
-       console.log("THIS.STATE inside CART ORDER ENTRY -->", this.state);
+
+    console.log("THIS.STATE inside CART ORDER ENTRY -->", this.state);
     const orderEntries = this.props.entryArray;
     let sumTotal;
     for (let i = 0; i < orderEntries.length; i++) {
@@ -139,9 +137,8 @@ class CartItem extends React.Component {
       let quantity = orderEntries[i].QTY;
       sumTotal += quantity * price;
     }
-    let entryArray = this.props.entryArray || []
-    console.log('ENTRY ARRAY --> ', entryArray)
-
+    let entryArray = this.props.entryArray || [];
+    console.log("ENTRY ARRAY --> ", entryArray);
 
     if (!this.props.isLoggedIn) {
       cartArray = JSON.parse(localStorage.getItem("guestOrder"));
@@ -150,9 +147,9 @@ class CartItem extends React.Component {
         let selectedColor;
         selectedColor = entry.colorId === 1 ? "white" : "black";
         return (
-          <div id='productCardAllView' key={cartArray.indexOf(entry)}>
-            <img id='shirtImgAll' src={entry.imgPath} />
-            <div id='designNameAll'>{entry.designName}</div>
+          <div id="productCardAllView" key={cartArray.indexOf(entry)}>
+            <img id="shirtImgAll" src={entry.imgPath} />
+            <div id="designNameAll">{entry.designName}</div>
             <div>${(entry.price / 100).toFixed(2)}</div>
             <div>number of items {entry.QTY}</div>
             <div>size {entry.size}</div>
@@ -163,7 +160,7 @@ class CartItem extends React.Component {
             <form value={cartArray.indexOf(entry)} onSubmit={this.handleEdit}>
               <div>
                 <label>Size</label>
-                <select name='size' onChange={this.handleChange}>
+                <select name="size" onChange={this.handleChange}>
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>
@@ -172,7 +169,7 @@ class CartItem extends React.Component {
 
               <div>
                 <label>Color</label>
-                <select name='color.name' onChange={this.handleChange}>
+                <select name="color.name" onChange={this.handleChange}>
                   <option value={"white"}>white</option>
                   <option value={"black"}>black</option>
                 </select>
@@ -182,9 +179,9 @@ class CartItem extends React.Component {
                 <label>Qty</label>
 
                 <input
-                  type='number'
-                  min='1'
-                  name='QTY'
+                  type="number"
+                  min="1"
+                  name="QTY"
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -192,7 +189,7 @@ class CartItem extends React.Component {
               <div>
                 <button
                   value={cartArray.indexOf(entry)}
-                  type='submit'
+                  type="submit"
                   onClick={this.handleEdit}
                 >
                   Update Item{" "}
@@ -203,7 +200,7 @@ class CartItem extends React.Component {
             <button
               onClick={this.handleRemove}
               value={cartArray.indexOf(entry)}
-              type='button'
+              type="button"
             >
               Remove Item
             </button>
@@ -211,76 +208,67 @@ class CartItem extends React.Component {
         );
       });
     } else {
-      
-    return entryArray.map((entry) => {
+      return entryArray.map((entry) => {
+        return (
+          <div id="productCardAllView" key={entry.id}>
+            <img id="shirtImgAll" src={entry.product.imgPath} />
+            <div id="designNameAll">{entry.product.designName}</div>
+            <div>${(entry.product.price / 100).toFixed(2)}</div>
+            <div>number of items {entry.QTY}</div>
+            <div>size {entry.size}</div>
+            {/* <div>color {entry.color.id}</div> */}
+            <div>color {entry.color.name}</div>
 
-      return (
-        <div id="productCardAllView" key={entry.id}>
-          <img id="shirtImgAll" src={entry.product.imgPath} />
-          <div id="designNameAll">{entry.product.designName}</div>
-          <div>${(entry.product.price / 100).toFixed(2)}</div>
-          <div>number of items {entry.QTY}</div>
-          <div>size {entry.size}</div>
-          {/* <div>color {entry.color.id}</div> */}
-          <div>color {entry.color.name}</div>
+            <div>Update Item</div>
+            <form value={entry.id} onSubmit={this.handleSubmit}>
+              <div>
+                <label>Size</label>
+                <select name="size" onChange={this.handleChange}>
+                  <option value={"S"}>S</option>
+                  <option value={"M"}>M</option>
+                  <option value={"L"}>L</option>
+                </select>
+              </div>
 
-          <div>Update Item</div>
-          <form value={entry.id} onSubmit={this.handleSubmit}>
-            <div>
-              <label>Size</label>
-              <select name="size" onChange={this.handleChange}>
+              <div>
+                <label>Color</label>
+                <select name="colorId" onChange={this.handleChange}>
+                  <option value={1}>white</option>
+                  <option value={2}>black</option>
+                </select>
+              </div>
 
-                <option value={"S"}>S</option>
-                <option value={"M"}>M</option>
-                <option value={"L"}>L</option>
-              </select>
-            </div>
+              <div>
+                <label>Qty</label>
 
-            <div>
-              <label>Color</label>
-              <select name="colorId" onChange={this.handleChange}>
-                <option value={1}>white</option>
-                <option value={2}>black</option>
-              </select>
-            </div>
+                <input
+                  type="number"
+                  min="1"
+                  name="QTY"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div>
+                <button
+                  value={entry.id}
+                  type="submit"
+                  onClick={this.handleClickUpdateButton}
+                >
+                  Update Item
+                </button>
+              </div>
+            </form>
 
-            <div>
-              <label>Qty</label>
-
-              <input
-                type="number"
-                min="1"
-                name="QTY"
-
-                value={this.state.name}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div>
-              <button
-                value={entry.id}
-
-                type="submit"
-                onClick={this.handleClickUpdateButton}
-              >
-                Update Item
-              </button>
-            </div>
-          </form>
-
-
-          <button onClick={this.handleClick} value={entry.id} type="button">
-
-            Remove Item
-          </button>
-        </div>
-      );
-    });
+            <button onClick={this.handleClick} value={entry.id} type="button">
+              Remove Item
+            </button>
+          </div>
+        );
+      });
+    }
   }
 }
-    }
-}
-
 
 function mapStateToProps(state) {
   return {
@@ -293,17 +281,10 @@ function mapDispatchToProps(dispatch, { history }) {
     deleteOrderEntry: (id) => {
       dispatch(deleteOrderEntryThunkCreator(id));
     },
-    getOrderEntry: () => {
-      dispatch(getOrderEntryThunkCreator());
-    },
     updateOrderEntry: (item) => {
-
       dispatch(updateOrderEntryThunkCreator(item, history));
-
     },
   };
 }
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
-

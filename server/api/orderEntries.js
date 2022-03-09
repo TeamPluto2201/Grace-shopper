@@ -10,8 +10,6 @@ const {
 router.post("/", async (req, res, next) => {
   try {
     const { id } = await User.findByToken(req.headers.authorization);
-    // grab the current user Id and find their associated order that has not been purchased
-    const { id } = await User.findByToken(req.headers.authorization);
     console.log("ID order entries post-->", id);
 
     let currentOrder = await Order.findOne({
